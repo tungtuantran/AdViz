@@ -1,0 +1,11 @@
+{
+  "name": "adviz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tung Tuan Tran & Mai Quynh Nguyen",
+  "license": "ISC"
+}
