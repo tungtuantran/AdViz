@@ -1,11 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+    <script type="text/javascript" src='js/script.js'></script>
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
-<body>
-    Mein erstes HTML! 
-</body>
+
+<nav>   
+    <ul id="navigation">
+        <li><a href="#login">Login</a></li>
+        <li><a href="#main">Main</a></li>
+        <li><a href="#add">Add</a></li>
+        <li><a href="#updateDelete">UpdateDelete</a></li>
+    </ul>
+</nav>
+
+<section id="login">
+    <h1>Login</h1>
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="usernameInput" name="username" required minlength="4" maxlength="8" size="30">
+ 
+        <p> </p>
+
+        <label for="password">Password:</label>
+        <input type="text" id="passwordInput" name="password" required minlength="4" maxlength="8" size="30">
+
+         <p></p>
+
+        <label for="loginButton"></label>
+        <button type="button" id="loginButton">Login</button>
+
+    </form>
+  </section>
+    
+  <section id="main">
+    <h1>Kartenansicht</h1>
+    <form>
+    <button type="button" id="showButton">Show</button>
+    <button type="button" id="addButtonMain">Add</button>
+
+    <ul id="kontaktliste">
+        <li><a href="#updateDelete">Jeff</a></li>
+        <li><a href="#updateDelete">Hans</a></li>
+        <li><a href="#updateDelete">Peter</a></li>
+        <li><a href="#updateDelete">Jörg</a></li>
+    </ul>
+
+    <body>
+        <div id = "map" style='height: 400px; width: 400px;'></div>
+        <script>
+            var map = L.map('map').setView([0,0],1);
+            L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
+                attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+            }).addTo(map);
+            var marker = L.marker([52.520008,13.404954]).addTo(map);
+        </script>
+    </body>
+    </form>
+
+  </section>
+
+  <section id="add">
+    <h1>Kontakt hinzufügen</h1>
+    <form>
+        <label for="nameInputAdd">Name:</label>
+        <input type="text" id="nameInputAdd" name="name" required minlength="4" maxlength="8" size="30">
+        
+        <label for="vornameInputAdd">Vorname:</label>
+        <input type="text" id="vornameInputAdd" name="vorname" required minlength="4" maxlength="8" size="30">
+
+        <label for="strasseInputAdd">Strasse:</label>
+        <input type="text" id="strasseInputAdd" name="strasse" required minlength="4" maxlength="8" size="30">
+        
+        <label for="postleitzahlInputAdd">Postleitzahl:</label>
+        <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required minlength="4" maxlength="8" size="30">
+        
+        <label for="stadtInputAdd">Stadt:</label>
+        <input type="text" id="stadtInputAdd" name="stadt" required minlength="4" maxlength="8" size="30">
+        
+        <label for="landInputAdd">Land:</label>
+        <input type="text" id="landInputAdd" name="land" required minlength="4" maxlength="8" size="30">
+        
+        <label for="privateCheckboxAdd">Privat:</label> 
+        <input type="checkbox" id="privateCheckboxAdd">
+
+        <p></p>
+
+        <button type="button" id="addButtonAdd">Add</button>
+
+    </form>   
+    
+
+  </section>
+
+  <section id="updateDelete">
+    <h1>Kontaktinformation ändern/loeschen</h1>
+    <form>
+        <label for="nameInputUpDel">Name:</label>
+        <input type="text" id="nameInputUpDel" name="name" required minlength="4" maxlength="8" size="30">
+        
+        <label for="vornameInputUpDel">Vorname:</label>
+        <input type="text" id="vornameInputUpDel" name="vorname" required minlength="4" maxlength="8" size="30">
+
+        <label for="strasseInputUpDel">Strasse:</label>
+        <input type="text" id="strasseInputUpDel" name="strasse" required minlength="4" maxlength="8" size="30">
+        
+        <label for="postleitzahlInputUpDel">Postleitzahl:</label>
+        <input type="text" id="postleitzahlInputUpDel" name="postleitzahl" required minlength="4" maxlength="8" size="30">
+        
+        <label for="stadtInputUpDel">Stadt:</label>
+        <input type="text" id="stadtInputUpDel" name="stadt" required minlength="4" maxlength="8" size="30">
+       
+        <label for="landInputUpDel">Land:</label>
+        <input type="text" id="landInputUpDel" name="land" required minlength="4" maxlength="8" size="30">
+        
+        <label for="privateCheckboxUpDel">Privat:</label> 
+        <input type="checkbox" id="privateCheckboxUpDel">
+        
+
+        <p></p>
+
+        <button type="button" id="updateButton">Update</button>
+        <button type="button" id="deleteButton">Delete</button>
+
+          
+    </form>
+  </section>
+
 </html>
