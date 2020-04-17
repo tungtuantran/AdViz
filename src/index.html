@@ -5,7 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    Mein erstes HTML! 
-</body>
+
+<nav>
+    <ul id="navigation">
+        <li><a href="#login">Login</a></li>
+        <li><a href="#main">Main</a></li>
+        <li><a href="#add">Add</a></li>
+        <li><a href="#updateDelete">UpdateDelete</a></li>
+    </ul>
+</nav>
+
+<section id="login">
+    <h1>Login</h1>
+    <body>
+    <p>Username</p>
+    <textarea cols="30" rows="1"> </textarea>
+    <p>Password</p>
+    <textarea cols="30" rows="1"> </textarea>
+
+    <p></p>
+    <button type="button">Login</button>
+
+
+    </body>
+</section>
+
+<section id="main">
+    <h1>Kartenansicht</h1>
+    <button type="button">Show</button>
+    <button type="button">Add</button>
+
+    <head>
+        <style>
+            #map {
+                width: 100%;
+                height: 400px;
+                background-color: grey;
+            }
+        </style>
+    </head>
+    <body>
+    <h3>Karte</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    </body>
+
+</section>
+
+<section id="add">
+    <h1>Kontakt hinzufügen</h1>
+    <body>
+    <p>Name</p>
+    <textarea id= "name" cols="30" rows="1"> </textarea>
+    <p>Vorname</p>
+    <textarea id= "vorname" cols="30" rows="1"> </textarea>
+    <p>Strasse</p>
+    <textarea id= "strasse" cols="30" rows="1"> </textarea>
+    <p>Postleitzahl</p>
+    <textarea id= "postleitzahl" cols="30" rows="1"> </textarea>
+    <p>Stadt</p>
+    <textarea id= "stadt" cols="30" rows="1"> </textarea>
+    <p>Land</p>
+    <textarea id= "land" cols="30" rows="1"> </textarea>
+    <p>Privat</p>
+    <label>
+        <input id="privat" type="checkbox">
+    </label>
+
+    <p></p>
+
+    <button type="button">Add</button>
+
+
+    </body>
+
+</section>
+
+<section id="updateDelete">
+    <h1>Kontaktinformation ändern/loeschen</h1>
+    <body>
+    <p>Name</p>
+    <textarea id= "name" cols="30" rows="1"> </textarea>
+    <p>Vorname</p>
+    <textarea id= "vorname" cols="30" rows="1"> </textarea>
+    <p>Strasse</p>
+    <textarea id= "strasse" cols="30" rows="1"> </textarea>
+    <p>Postleitzahl</p>
+    <textarea id= "postleitzahl" cols="30" rows="1"> </textarea>
+    <p>Stadt</p>
+    <textarea id= "stadt" cols="30" rows="1"> </textarea>
+    <p>Land</p>
+    <textarea id= "land" cols="30" rows="1"> </textarea>
+    <p>Privat</p>
+    <label>
+        <input id="privat" type="checkbox">
+    </label>
+
+    <p></p>
+
+    <button type="button">Update</button>
+    <button type="button">Delete</button>
+
+
+    </body>
+</section>
+
 </html>
