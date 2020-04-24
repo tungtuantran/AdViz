@@ -1,0 +1,10 @@
+h1 {
+    font-family: Arial, serif;
+    font-size: 30px;
+}
+
+label {
+    font-family: Arial, serif;
+    width: 300px;
+    display:block;
+}
