@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AdViz</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
@@ -24,21 +24,23 @@
 
 <section id="login">
     <h1>Login</h1>
-    <form>
+    <form action="#main" method="GET">
         <body>
             <main>
-                <label for="username">Username:</label>
-                <input type="text" id="usernameInput" name="username" required minlength="4" maxlength="8" size="30">
-        
-                <p> </p>
+                <p> 
+                    <label for="username">Username:</label>
+                    <input type="text" id="usernameInput" name="username" required minlength="4" maxlength="8" size="30">
+                </p>
 
-                <label for="password">Password:</label>
-                <input type="text" id="passwordInput" name="password" required minlength="4" maxlength="8" size="30">
+                <p>
+                    <label for="password">Password:</label>
+                    <input type="password" id="passwordInput" name="password" required minlength="4" maxlength="8" size="30">
+                </p>
 
-                <p></p>
-
-                <label for="loginButton"></label>
-                <button type="button" id="loginButton">Login</button>
+                <p>
+                    <label for="loginButton"></label>
+                    <button type="button" id="loginButton">Login</button>
+                </p>
             </main>
 
             <script type="text/javascript" src='js/script.js'></script>
@@ -51,16 +53,19 @@
 <section id="main">
     <h1>Kartenansicht</h1>
     <form>
-        <button type="button" id="showButton">Show</button>
-        <button type="button" id="addButtonMain">Add</button>
-
+        <p>
+            <button type="button" id="showButton">Show</button>
+            <button type="button" id="addButtonMain">Add</button>
+        </p>
         
-        <ul id="kontaktliste">
-            <li><a href="#updateDelete">Jeff</a></li>
-            <li><a href="#updateDelete">Hans</a></li>
-            <li><a href="#updateDelete">Peter</a></li>
-            <li><a href="#updateDelete">Jörg</a></li>
-        </ul>
+        <p>
+            <ul id="kontaktliste">
+                <li><a href="#updateDelete">Jeff</a></li>
+                <li><a href="#updateDelete">Hans</a></li>
+                <li><a href="#updateDelete">Peter</a></li>
+                <li><a href="#updateDelete">Jörg</a></li>
+            </ul>
+        </p>
         
         <body>
             <div id = "map" style='height: 400px; width: 400px;'></div>
@@ -79,43 +84,44 @@
 <section id="add">
     <h1>Kontakt hinzufügen</h1>
     <form>
-        <label for="nameInputAdd">Name:</label>
-        <input type="text" id="nameInputAdd" name="name" required minlength="4" maxlength="8" size="30">
-        
-        <p> </p>
+        <p>
+            <label for="nameInputAdd">Name:</label>
+            <input type="text" id="nameInputAdd" name="name" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="vornameInputAdd">Vorname:</label>
-        <input type="text" id="vornameInputAdd" name="vorname" required minlength="4" maxlength="8" size="30">
+        <p>
+            <label for="vornameInputAdd">Vorname:</label>
+            <input type="text" id="vornameInputAdd" name="vorname" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <p> </p>
+        <p>
+            <label for="strasseInputAdd">Strasse:</label>
+            <input type="text" id="strasseInputAdd" name="strasse" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="strasseInputAdd">Strasse:</label>
-        <input type="text" id="strasseInputAdd" name="strasse" required minlength="4" maxlength="8" size="30">
-        
-        <p> </p>
+        <p>
+            <label for="postleitzahlInputAdd">Postleitzahl:</label>
+            <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required minlength="5" maxlength="5" size="30" pattern= "[0-9]{5}">
+        </p>
 
-        <label for="postleitzahlInputAdd">Postleitzahl:</label>
-        <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required minlength="4" maxlength="8" size="30">
-        
-        <p> </p>
+        <p>
+            <label for="stadtInputAdd">Stadt:</label>
+            <input type="text" id="stadtInputAdd" name="stadt" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="stadtInputAdd">Stadt:</label>
-        <input type="text" id="stadtInputAdd" name="stadt" required minlength="4" maxlength="8" size="30">
-        
-        <p> </p>
+        <p>
+            <label for="landInputAdd">Land:</label>
+            <input type="text" id="landInputAdd" name="land" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="landInputAdd">Land:</label>
-        <input type="text" id="landInputAdd" name="land" required minlength="4" maxlength="8" size="30">
-        
-        <p> </p>
+        <p>
+            <label for="privateCheckboxAdd">Privat:</label> 
+            <input type="checkbox" id="privateCheckboxAdd">
+        </p>
 
-        <label for="privateCheckboxAdd">Privat:</label> 
-        <input type="checkbox" id="privateCheckboxAdd">
-
-        <p></p>
-
-        <button type="button" id="addButtonAdd">Add</button>
-
+        <p>
+            <button type="button" id="addButtonAdd">Add</button>
+        </p>
     </form>   
     
 </section>
@@ -123,44 +129,45 @@
 <section id="updateDelete">
     <h1>Kontaktinformation ändern/loeschen</h1>
     <form>
-        <label for="nameInputUpDel">Name:</label>
-        <input type="text" id="nameInputUpDel" name="name" required minlength="4" maxlength="8" size="30">
-        
-        <p></p>
+        <p>
+            <label for="nameInputAdd">Name:</label>
+            <input type="text" id="nameInputAdd" name="name" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="vornameInputUpDel">Vorname:</label>
-        <input type="text" id="vornameInputUpDel" name="vorname" required minlength="4" maxlength="8" size="30">
+        <p>
+            <label for="vornameInputAdd">Vorname:</label>
+            <input type="text" id="vornameInputAdd" name="vorname" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <p></p>
+        <p>
+            <label for="strasseInputAdd">Strasse:</label>
+            <input type="text" id="strasseInputAdd" name="strasse" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="strasseInputUpDel">Strasse:</label>
-        <input type="text" id="strasseInputUpDel" name="strasse" required minlength="4" maxlength="8" size="30">
-        
-        <p></p>
+        <p>
+            <label for="postleitzahlInputAdd">Postleitzahl:</label>
+            <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required minlength="5" maxlength="5" size="30" pattern= "^[0-9]$">
+        </p>
 
-        <label for="postleitzahlInputUpDel">Postleitzahl:</label>
-        <input type="text" id="postleitzahlInputUpDel" name="postleitzahl" required minlength="4" maxlength="8" size="30">
-        
-        <p></p>
+        <p>
+            <label for="stadtInputAdd">Stadt:</label>
+            <input type="text" id="stadtInputAdd" name="stadt" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="stadtInputUpDel">Stadt:</label>
-        <input type="text" id="stadtInputUpDel" name="stadt" required minlength="4" maxlength="8" size="30">
-       
-        <p></p>
+        <p>
+            <label for="landInputAdd">Land:</label>
+            <input type="text" id="landInputAdd" name="land" required minlength="4" maxlength="8" size="30">
+        </p>
 
-        <label for="landInputUpDel">Land:</label>
-        <input type="text" id="landInputUpDel" name="land" required minlength="4" maxlength="8" size="30">
-        
-        <p></p>
+        <p>
+            <label for="privateCheckboxAdd">Privat:</label> 
+            <input type="checkbox" id="privateCheckboxAdd">
+        </p>
 
-        <label for="privateCheckboxUpDel">Privat:</label> 
-        <input type="checkbox" id="privateCheckboxUpDel">
-        
-
-        <p></p>
-
-        <button type="button" id="updateButton">Update</button>
-        <button type="button" id="deleteButton">Delete</button>
+        <p>
+            <button type="button" id="updateButton">Update</button>
+            <button type="button" id="deleteButton">Delete</button>
+        </p>
         
     </form>   
 </section>
