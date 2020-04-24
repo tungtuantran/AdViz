@@ -29,17 +29,17 @@
                 <main>
                     <p> 
                         <label for="username">Username:</label>
-                        <input type="text" id="usernameInput" name="username" required minlength="4" maxlength="8" size="30">
+                        <input type="text" id="usernameInput" name="username" required minlength="5" size="30" onkeyup="checkLoginInput()">
                     </p>
 
                     <p>
                         <label for="password">Password:</label>
-                        <input type="password" id="passwordInput" name="password" required minlength="4" maxlength="8" size="30">
+                        <input type="password" id="passwordInput" name="password" required minlength="8" size="30" onkeyup="checkLoginInput()">
                     </p>
 
                     <p>
                         <label for="loginButton"></label>
-                        <button type="button" id="loginButton">Login</button>
+                        <input type="submit" id="loginButton" value= "Einloggen" disabled>
                     </p>
                 </main>
 
@@ -83,32 +83,32 @@
         <form>
             <p>
                 <label for="nameInputAdd">Name:</label>
-                <input type="text" id="nameInputAdd" name="name" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="nameInputAdd" name="name" required size="30">
             </p>
 
             <p>
                 <label for="vornameInputAdd">Vorname:</label>
-                <input type="text" id="vornameInputAdd" name="vorname" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="vornameInputAdd" name="vorname" required size="30">
             </p>
 
             <p>
                 <label for="strasseInputAdd">Strasse:</label>
-                <input type="text" id="strasseInputAdd" name="strasse" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="strasseInputAdd" name="strasse" required size="30">
             </p>
 
             <p>
                 <label for="postleitzahlInputAdd">Postleitzahl:</label>
-                <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required minlength="5" maxlength="5" size="30" pattern= "[0-9]{5}">
+                <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30" pattern= "[0-9]{5}">
             </p>
 
             <p>
                 <label for="stadtInputAdd">Stadt:</label>
-                <input type="text" id="stadtInputAdd" name="stadt" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="stadtInputAdd" name="stadt" required size="30">
             </p>
 
             <p>
                 <label for="landInputAdd">Land:</label>
-                <input type="text" id="landInputAdd" name="land" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="landInputAdd" name="land" required size="30">
             </p>
 
             <p>
@@ -128,32 +128,32 @@
         <form>
             <p>
                 <label for="nameInputAdd">Name:</label>
-                <input type="text" id="nameInputAdd" name="name" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="nameInputAdd" name="name" required size="30">
             </p>
 
             <p>
                 <label for="vornameInputAdd">Vorname:</label>
-                <input type="text" id="vornameInputAdd" name="vorname" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="vornameInputAdd" name="vorname" required size="30">
             </p>
 
             <p>
                 <label for="strasseInputAdd">Strasse:</label>
-                <input type="text" id="strasseInputAdd" name="strasse" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="strasseInputAdd" name="strasse" required size="30">
             </p>
 
             <p>
                 <label for="postleitzahlInputAdd">Postleitzahl:</label>
-                <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required minlength="5" maxlength="5" size="30" pattern= "^[0-9]$">
+                <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30" pattern= "^[0-9]$">
             </p>
 
             <p>
                 <label for="stadtInputAdd">Stadt:</label>
-                <input type="text" id="stadtInputAdd" name="stadt" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="stadtInputAdd" name="stadt" required size="30">
             </p>
 
             <p>
                 <label for="landInputAdd">Land:</label>
-                <input type="text" id="landInputAdd" name="land" required minlength="4" maxlength="8" size="30">
+                <input type="text" id="landInputAdd" name="land" required size="30">
             </p>
 
             <p>

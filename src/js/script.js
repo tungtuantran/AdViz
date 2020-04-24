@@ -1,16 +1,16 @@
-function login(){
+function checkLoginInput(){
+    
     var usernameInputValue = document.getElementById('usernameInput').value;
     var passwordInputValue = document.getElementById('passwordInput').value;
+    var loginButton = document.getElementById('loginButton');
 
-    //sobald username und pw einen input haben -> erfolgreich
-    if(usernameInputValue.length > 0 && passwordInputValue.length > 0){
-        alert("Erfolgreich eingeloggt.");
-    }else{
-        alert("Einloggen fehlgeschlagen.");
+    if(usernameInputValue.length > 0 && passwordInputValue.length > 0) {
+        if(loginButton.disabled == true){
+            loginButton.disabled = false;
+        }
+    } else {
+        if(loginButton.disabled == false){
+            loginButton.disabled = true;
+        }
     }
-}
-
-var loginButton = document.getElementById('loginButton');
-if(loginButton){
-    loginButton.addEventListener('click', login, true);
 }
