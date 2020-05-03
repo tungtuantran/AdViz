@@ -20,7 +20,7 @@
         <li><a href="#updateDelete">UpdateDelete</a></li>
 </nav>
 
-<body>
+<body onload = "getMap()">
     <section id="login">
         <h1>Login</h1>
         <form action="#main" method="GET">
@@ -37,7 +37,7 @@
 
                     <p>
                         <label for="loginButton"></label>
-                        <input type="submit" id="loginButton" value= "Einloggen" disabled>
+                        <input type="submit" id="loginButton" value= "Einloggen" disabled onclick="getMap()">
                     </p>
                 </main>
 
@@ -67,15 +67,15 @@
                 </ul>
             </p>
             
-                <div id = "map" style='height: 400px; width: 400px;'></div>
-                <script>
+                <div id ="map" class="map" style='height: 400px; width: 400px;'></div>
+                <!--<script>
                     var map = L.map('map').setView([0,0],1);
                     L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
                         attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
                     }).addTo(map);
                     var marker = L.marker([52.520008,13.404954]).addTo(map);
                 </script>
-        
+                -->
         </form>
 
     </section>
