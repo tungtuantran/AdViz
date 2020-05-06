@@ -8,3 +8,40 @@ label {
     width: 300px;
     display:block;
 }
+.mainnav{
+    text-align: center;
+    border-bottom: 1px solid #dbdbdb;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    font-size: 17px;
+}
+
+.mainnav ul {
+    display: inline-block;
+    list-style-type: disc;
+    justify-content: center;
+    padding-right: 100px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+#loginBox{
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+    background: #c9e9ff;
+    padding: 20px; 
+    width: 500px;
+    height: 300px;
+}
+
+#loginBox p{
+    display: block;
+    text-align: center;
+}
+
+
+
+
+
+

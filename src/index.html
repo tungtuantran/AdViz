@@ -13,16 +13,16 @@
 
 </head>
 
-<nav>
-        <li><a href="#login">Main</a></li>
-        <li><a href="#main">Main</a></li>
-        <li><a href="#add">Add</a></li>
-        <li><a href="#updateDelete">UpdateDelete</a></li>
+<nav class = "mainnav">
+        <ul><a href="#login">LOGIN</a></ul>
+        <ul><a href="#main">MAIN</a></ul>
+        <ul><a href="#add">ADD</a></ul>
+        <ul><a href="#updateDelete">UPDATE-DELETE</a></ul>
 </nav>
 
 <body>
     <section id="login">
-        <h1>Login</h1>
+        <div id = "loginBox">
         <form action="#main" method="GET">
                 <main>
                     <p> 
@@ -37,13 +37,14 @@
 
                     <p>
                         <label for="loginButton"></label>
-                        <input type="submit" id="loginButton" value= "Einloggen" disabled>
+                        <input type="submit" id="loginButton" value= "Login" disabled>
                     </p>
                 </main>
 
                 <script type="text/javascript" src='js/script.js'></script>
 
         </form>
+    </div>
     </section>
         
     <section id="main">
