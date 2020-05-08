@@ -26,19 +26,99 @@ label {
 }
 
 #loginBox{
-    margin: auto;
-    text-align: center;
+    width: 320px;
+    height: 420px;
+    background-color: lightsteelblue;
+    top: 50%;
+    left: 40%;
+    position: relative;
+    transform: translate(-50,-50);
     border-radius: 25px;
-    background: #c9e9ff;
-    padding: 20px; 
-    width: 500px;
-    height: 300px;
+    margin-bottom: 150px;
+    margin-top: 100px;
+    
 }
 
 #loginBox p{
     display: block;
     text-align: center;
+    margin-top: 30px;
+    
 }
+
+#loginBox h1{
+    text-align: center;
+    padding-top: 40px;
+    margin-bottom: 50px;
+}
+
+#loginBox input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px; 
+    width: 150px;
+    background: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+#loginBox label{
+    margin-left: -68px;
+    margin-bottom: 6px;
+}
+
+.main{
+    display: inline-table;
+}
+
+#mapBox{
+    width: 600px;
+    height: 600px;
+    border-style: groove;
+    border-radius: 25px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+    left: 30%;
+    
+}
+
+#mapBox h1{
+    text-align: center;
+    padding-top: 30px;
+    
+
+}
+
+#map{
+    position: relative;
+    display: inline-block;
+    left: 17%;
+    bottom:18%;
+    
+}
+
+/* #showAddBox{
+    display: inline-block;
+    
+} */
+
+
+#showAddBox li{
+    display: inline-block;
+    position: relative;
+    
+}
+
+#showAddBox input[type="button"]{
+    display: inline;
+}
+
+
+
 
 
 
