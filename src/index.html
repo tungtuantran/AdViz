@@ -8,166 +8,197 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script type="text/javascript" src='js/script.js'></script>
 
     <link rel="stylesheet" href="css/style.css">
 
 </head>
 
-<nav>
-        <li><a href="#login">Main</a></li>
-        <li><a href="#main">Main</a></li>
-        <li><a href="#add">Add</a></li>
-        <li><a href="#updateDelete">UpdateDelete</a></li>
+<nav class="mainnav">
+    <ul><a href="#login">LOGIN</a></ul>
+    <ul><a href="#main">MAIN</a></ul>
+    <ul><a href="#add">ADD</a></ul>
+    <ul><a href="#updateDelete">UPDATE-DELETE</a></ul>
 </nav>
 
 <body onload = "getMap()">
     <section id="login">
-        <h1>Login</h1>
-        <form action="#main" method="GET">
+        <div id="loginBox">
+            <form action="#main" method="GET">
                 <main>
-                    <p> 
-                        <label for="username">Username:</label>
-                        <input type="text" id="usernameInput" name="username" required minlength="5" size="30" onkeyup="checkLoginInput()">
+                    <h1>Login</h1>
+                    <p>
+                        <label for="username">Benutzername:</label>
+                        <input type="text" id="usernameInput" name="username" placeholder="Benutzername eingeben"
+                            required minlength="5" size="30" onkeyup="checkLoginInput()">
                     </p>
 
                     <p>
-                        <label for="password">Password:</label>
-                        <input type="password" id="passwordInput" name="password" required minlength="8" size="30" onkeyup="checkLoginInput()">
+                        <label for="password">Passwort:</label>
+                        <input type="password" id="passwordInput" name="password" placeholder="Passwort eingeben"
+                            required minlength="8" size="30" onkeyup="checkLoginInput()">
                     </p>
 
                     <p>
                         <label for="loginButton"></label>
-                        <input type="submit" id="loginButton" value= "Einloggen" disabled onclick="getMap()">
+                        <input type="submit" id="loginButton" value="Anmelden" disabled>
                     </p>
                 </main>
 
-                <script type="text/javascript" src='js/script.js'></script>
 
-        </form>
+
+            </form>
+        </div>
     </section>
-        
+
+
     <section id="main">
-        <h1>Kartenansicht</h1>
-        <form>
-            <p>
-                <input type="button" id="showButton" value= "Show">
-                <nav>   
-                    <a href="#add">
-                        <input type="button" id="addButtonMain" value ="Add">
-                    </a>
-            </nav>
-            </p>
-            
-            <p>
-                <ul id="kontaktliste">
-                    <li><a href="#updateDelete">Jeff</a></li>
-                    <li><a href="#updateDelete">Hans</a></li>
-                    <li><a href="#updateDelete">Peter</a></li>
-                    <li><a href="#updateDelete">Jörg</a></li>
-                </ul>
-            </p>
-            
-                <div id ="map" class="map" style='height: 400px; width: 400px;'></div>
-                <!--<script>
-                    var map = L.map('map').setView([0,0],1);
+
+
+        <div id="mapBox">
+
+            <h1>Map</h1>
+            <form>
+
+                <div id="map" style='height: 400px; width: 400px;'></div>
+                <script>
+                    var map = L.map('map').setView([0, 0], 1);
                     L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
                         attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
                     }).addTo(map);
-                    var marker = L.marker([52.520008,13.404954]).addTo(map);
+                    var marker = L.marker([52.520008, 13.404954]).addTo(map);
                 </script>
-                -->
+
+        </div>
+
+        <div id="showAddBox">
+
+
+            <p>
+            <ul id="kontaktliste">
+                <li><a href="#updateDelete">Jeff</a></li>
+                <li><a href="#updateDelete">Hans</a></li>
+                <li><a href="#updateDelete">Peter</a></li>
+                <li><a href="#updateDelete">Jörg</a></li>
+            </ul>
+            </p>
+
+            <p>
+                <input type="button" id="showButton" value="Anzeigen">
+            <nav>
+                <a href="#add">
+                    <input type="button" id="addButtonMain" value="Hinzufügen">
+                </a>
+            </nav>
+            </p>
+
+        </div>
+
         </form>
 
+
     </section>
+
+
 
     <section id="add">
-        <h1>Kontakt hinzufügen</h1>
-        <form>
-            <p>
-                <label for="nameInputAdd">Name:</label>
-                <input type="text" id="nameInputAdd" name="name" required size="30">
-            </p>
+        <div class=contactBox>
+            <h1>Kontakt hinzufügen</h1>
+            <form>
+                <p>
+                    <label for="nameInputAdd">Name:</label>
+                    <input type="text" id="nameInputAdd" name="name" required size="30">
+                </p>
 
-            <p>
-                <label for="vornameInputAdd">Vorname:</label>
-                <input type="text" id="vornameInputAdd" name="vorname" required size="30">
-            </p>
+                <p>
+                    <label for="vornameInputAdd">Vorname:</label>
+                    <input type="text" id="vornameInputAdd" name="vorname" required size="30">
+                </p>
 
-            <p>
-                <label for="strasseInputAdd">Strasse:</label>
-                <input type="text" id="strasseInputAdd" name="strasse" required size="30">
-            </p>
+                <p>
+                    <label for="strasseInputAdd">Strasse:</label>
+                    <input type="text" id="strasseInputAdd" name="strasse" required size="30">
+                </p>
 
-            <p>
-                <label for="postleitzahlInputAdd">Postleitzahl:</label>
-                <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30" pattern= "[0-9]{5}">
-            </p>
+                <p>
+                    <label for="postleitzahlInputAdd">Postleitzahl:</label>
+                    <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30"
+                        pattern="[0-9]{5}">
+                </p>
 
-            <p>
-                <label for="stadtInputAdd">Stadt:</label>
-                <input type="text" id="stadtInputAdd" name="stadt" required size="30">
-            </p>
+                <p>
+                    <label for="stadtInputAdd">Stadt:</label>
+                    <input type="text" id="stadtInputAdd" name="stadt" required size="30">
+                </p>
 
-            <p>
-                <label for="landInputAdd">Land:</label>
-                <input type="text" id="landInputAdd" name="land" required size="30">
-            </p>
+                <p>
+                    <label for="landInputAdd">Land:</label>
+                    <input type="text" id="landInputAdd" name="land" required size="30">
+                </p>
 
-            <p>
-                <label for="privateCheckboxAdd">Privat:</label> 
-                <input type="checkbox" id="privateCheckboxAdd">
-            </p>
 
-            <p>
-                <button type="button" id="addButtonAdd">Add</button>
-            </p>
-        </form>   
-        
+                <p>
+                    <label for="privateCheckboxAdd">Privat:</label>
+                    <input type="checkbox" id="privateCheckboxAdd">
+                </p>
+
+
+                <p>
+                    <button type="button" id="addButtonAdd">Hinzufügen</button>
+                </p>
+            </form>
+        </div>
+
     </section>
+
 
     <section id="updateDelete">
-        <h1>Kontaktinformation ändern/loeschen</h1>
-        <form>
-            <p>
-                <label for="nameInputAdd">Name:</label>
-                <input type="text" id="nameInputAdd" name="name" required size="30">
-            </p>
+        <div class="contactBox">
+            <h1>Daten bearbeiten</h1>
+            <form>
+                <p>
+                    <label for="nameInputAdd">Name:</label>
+                    <input type="text" id="nameInputAdd" name="name" required size="30">
+                </p>
 
-            <p>
-                <label for="vornameInputAdd">Vorname:</label>
-                <input type="text" id="vornameInputAdd" name="vorname" required size="30">
-            </p>
+                <p>
+                    <label for="vornameInputAdd">Vorname:</label>
+                    <input type="text" id="vornameInputAdd" name="vorname" required size="30">
+                </p>
 
-            <p>
-                <label for="strasseInputAdd">Strasse:</label>
-                <input type="text" id="strasseInputAdd" name="strasse" required size="30">
-            </p>
+                <p>
+                    <label for="strasseInputAdd">Strasse:</label>
+                    <input type="text" id="strasseInputAdd" name="strasse" required size="30">
+                </p>
 
-            <p>
-                <label for="postleitzahlInputAdd">Postleitzahl:</label>
-                <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30" pattern= "^[0-9]$">
-            </p>
+                <p>
+                    <label for="postleitzahlInputAdd">Postleitzahl:</label>
+                    <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30"
+                        pattern="^[0-9]$">
+                </p>
 
-            <p>
-                <label for="stadtInputAdd">Stadt:</label>
-                <input type="text" id="stadtInputAdd" name="stadt" required size="30">
-            </p>
+                <p>
+                    <label for="stadtInputAdd">Stadt:</label>
+                    <input type="text" id="stadtInputAdd" name="stadt" required size="30">
+                </p>
 
-            <p>
-                <label for="landInputAdd">Land:</label>
-                <input type="text" id="landInputAdd" name="land" required size="30">
-            </p>
+                <p>
+                    <label for="landInputAdd">Land:</label>
+                    <input type="text" id="landInputAdd" name="land" required size="30">
+                </p>
 
-            <p>
-                <label for="privateCheckboxAdd">Privat:</label> 
-                <input type="checkbox" id="privateCheckboxAdd">
-            </p>
+                <p>
+                    <label for="privateCheckboxAdd">Privat:</label>
+                    <input type="checkbox" id="privateCheckboxAdd">
+                </p>
 
-            <p>
-                <button type="button" id="updateButton">Update</button>
-                <button type="button" id="deleteButton">Delete</button>
-            </p>
-        </form>   
+                <p>
+                    <button type="button" id="updateButton">Update</button>
+                    <button type="button" id="deleteButton">Delete</button>
+                </p>
+            </form>
+        </div>
     </section>
 </body>
+
 </html>
