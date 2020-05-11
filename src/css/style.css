@@ -64,6 +64,10 @@ label {
     margin-bottom: 50px;
 }
 
+#loginBox input[type="submit"]:hover{ 
+    background-color: lightgray;
+}
+
 #loginBox label{
     margin-left: 45px;
     margin-bottom: 6px;
@@ -159,6 +163,10 @@ label {
     border-radius: 10px;
     font-size: 14px;
    
+}
+
+.contactBox button:hover{
+    background-color: lightgray;
 }
 
 
