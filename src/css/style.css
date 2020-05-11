@@ -65,9 +65,11 @@ label {
 }
 
 #loginBox label{
-    margin-left: -68px;
+    margin-left: 45px;
     margin-bottom: 6px;
+    text-align: start;
 }
+
 
 .main{
     display: inline-table;
@@ -101,11 +103,9 @@ label {
     
 }
 
-/* #showAddBox{
-    display: inline-block;
-    
-} */
-
+#showAddBox{
+    text-align: center;
+}
 
 #showAddBox li{
     display: inline-block;
@@ -113,9 +113,60 @@ label {
     
 }
 
-#showAddBox input[type="button"]{
-    display: inline;
+#showAddBox p{ 
+    display: inline-block;
 }
+
+.contactBox{
+    width: 420px;
+    height: 750px;
+    top: 50%;
+    left: 35%;
+    position: relative;
+    transform: translate(-50,-50);
+    border-radius: 25px;
+    margin-bottom: 150px;
+    margin-top: 100px;
+    border-style: groove;
+
+}
+
+.contactBox label{
+    margin-left: 92px;
+    margin-bottom: 6px;
+    text-align: start;
+}
+
+.contactBox p{
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    
+}
+
+.contactBox h1{
+    text-align: center;
+    padding-top: 40px;
+    margin-bottom: 50px;
+}
+
+.contactBox button{
+    border: none;
+    outline: none;
+    height: 40px; 
+    width: 150px;
+    background: lightsteelblue;
+    border-radius: 10px;
+    font-size: 14px;
+   
+}
+
+
+
+
+
+
+
 
 
 
