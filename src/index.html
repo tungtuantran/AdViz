@@ -45,54 +45,46 @@
                     </p>
                 </main>
 
-
-
             </form>
         </div>
     </section>
 
 
     <section id="main">
+            <div id="mapBox">
+                <h1>MapView</h1>
+                <form>
 
-
-        <div id="mapBox">
-
-            <h1>Map</h1>
-            <form>
-
-                <div id="map" style='height: 400px; width: 400px;'></div>
-                <script>
-                    var map = L.map('map').setView([0, 0], 1);
-                    L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
-                        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-                    }).addTo(map);
-                    var marker = L.marker([52.520008, 13.404954]).addTo(map);
-                </script>
-
-        </div>
-
-        <div id="showAddBox">
-
-
-            <p>
-            <ul id="kontaktliste">
-                <li><a href="#updateDelete">Jeff</a></li>
-                <li><a href="#updateDelete">Hans</a></li>
-                <li><a href="#updateDelete">Peter</a></li>
-                <li><a href="#updateDelete">Jörg</a></li>
-            </ul>
-            </p>
-
-            <p>
-                <input type="button" id="showButton" value="Anzeigen">
-            <nav>
-                <a href="#add">
-                    <input type="button" id="addButtonMain" value="Hinzufügen">
-                </a>
-            </nav>
-            </p>
-
-        </div>
+                    <div id="map" style='height: 400px; width: 400px;'></div>
+                    <!-- <script>
+                        var map = L.map('map').setView([0, 0], 1);
+                        L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
+                            attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+                        }).addTo(map);
+                        var marker = L.marker([52.520008, 13.404954]).addTo(map);
+                    </script>
+                    -->
+                    <div id="showAddBox">
+                        <form>
+                            <p>
+                                <input type="button" id="showButton" value="Anzeigen">
+                                <nav>
+                                    <a href="#add">
+                                        <input type="button" id="addButtonMain" value="Hinzufügen">
+                                    </a>
+                                </nav>
+                            </p>
+                            <p>
+                                <ul id="kontaktliste">
+                                    <li><a href="#updateDelete">Jeff</a></li>
+                                    <li><a href="#updateDelete">Hans</a></li>
+                                    <li><a href="#updateDelete">Peter</a></li>
+                                    <li><a href="#updateDelete">Jörg</a></li>
+                                </ul>
+                            </p>
+                        </form>
+                    </div>
+            </div>
 
         </form>
 
