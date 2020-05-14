@@ -21,7 +21,7 @@
     <ul><a href="#updateDelete">UPDATE-DELETE</a></ul>
 </nav>
 
-<body onload = "getMap()">
+<body onload="getMap()">
     <section id="login">
         <div id="loginBox">
             <form action="#main" method="GET">
@@ -41,7 +41,7 @@
 
                     <p>
                         <label for="loginButton"></label>
-                        <input type="submit" id="loginButton" value="Anmelden" disabled>
+                        <input type="submit" id="loginButton" value="Anmelden" disabled onclick="isValidLoginData()">
                     </p>
                 </main>
 

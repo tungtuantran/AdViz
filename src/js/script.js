@@ -13,7 +13,6 @@ function getMap(){
 
 }
 
-
 function checkLoginInput(){
     var usernameInputValue = document.getElementById('usernameInput').value;
     var passwordInputValue = document.getElementById('passwordInput').value;
@@ -28,4 +27,8 @@ function checkLoginInput(){
             loginButton.disabled = true;
         }
     }
+}
+
+function isValidLoginData(){
+    //prüfen
 }
