@@ -6,9 +6,10 @@ h1 {
 label {
     font-family: Arial, serif;
     width: 300px;
-    display:block;
+    display: block;
 }
-.mainnav{
+
+.mainnav {
     text-align: center;
     border-bottom: 1px solid #dbdbdb;
     margin-top: 10px;
@@ -25,37 +26,37 @@ label {
     padding-bottom: 20px;
 }
 
-#loginBox{
+#loginBox {
     width: 320px;
     height: 420px;
     background-color: lightsteelblue;
     top: 50%;
     left: 40%;
     position: relative;
-    transform: translate(-50,-50);
+    transform: translate(-50, -50);
     border-radius: 25px;
     margin-bottom: 150px;
     margin-top: 100px;
-    
+
 }
 
-#loginBox p{
+#loginBox p {
     display: block;
     text-align: center;
     margin-top: 30px;
-    
+
 }
 
-#loginBox h1{
+#loginBox h1 {
     text-align: center;
     padding-top: 40px;
     margin-bottom: 50px;
 }
 
-#loginBox input[type="submit"]{
+#loginBox input[type="button"] {
     border: none;
     outline: none;
-    height: 40px; 
+    height: 40px;
     width: 150px;
     background: #fff;
     border-radius: 20px;
@@ -64,23 +65,32 @@ label {
     margin-bottom: 50px;
 }
 
-#loginBox input[type="submit"]:hover{ 
+#loginBox input[type="button"]:hover {
     background-color: lightgray;
 }
 
-#loginBox label{
+#loginBox label {
     margin-left: 45px;
     margin-bottom: 6px;
     text-align: start;
 }
 
-
-.main{
+.main {
     display: inline-table;
 }
 
-#mapBox{
-    width: 600px;
+#contactlist {
+    width: 80px;
+    height: 350px;
+    border: 1px solid;
+    font-size: 15px;
+    overflow: scroll;
+    display:inline-block;
+
+}
+
+#mapBox {
+    width: 700px;
     height: 700px;
     border-style: groove;
     border-radius: 25px;
@@ -88,46 +98,46 @@ label {
     margin-bottom: 50px;
     position: relative;
     display: inline-block;
-    left: 30%;
-    
+    left: 25%;
+
 }
 
-#mapBox h1{
+#mapBox h1 {
     text-align: center;
     padding-top: 30px;
-    
+
 
 }
 
-#map{
+#map {
     position: relative;
     display: inline-block;
     left: 17%;
-    bottom:18%;
-    
+    bottom: 18%;
+
 }
 
-#showAddBox{
+#showAddBox {
     text-align: center;
 }
 
-#showAddBox li{
+#showAddBox li {
     display: inline-block;
     position: relative;
-    
+
 }
 
-#showAddBox p{ 
+#showAddBox p {
     display: inline-block;
 }
 
-.contactBox{
+.contactBox {
     width: 420px;
     height: 750px;
     top: 50%;
     left: 35%;
     position: relative;
-    transform: translate(-50,-50);
+    transform: translate(-50, -50);
     border-radius: 25px;
     margin-bottom: 150px;
     margin-top: 100px;
@@ -135,52 +145,35 @@ label {
 
 }
 
-.contactBox label{
+.contactBox label {
     margin-left: 92px;
     margin-bottom: 6px;
     text-align: start;
 }
 
-.contactBox p{
+.contactBox p {
     display: block;
     text-align: center;
     margin-top: 30px;
-    
+
 }
 
-.contactBox h1{
+.contactBox h1 {
     text-align: center;
     padding-top: 40px;
     margin-bottom: 50px;
 }
 
-.contactBox button{
+.contactBox input[type="button"] {
     border: none;
     outline: none;
-    height: 40px; 
+    height: 40px;
     width: 150px;
     background: lightsteelblue;
     border-radius: 10px;
     font-size: 14px;
-   
 }
 
-.contactBox button:hover{
+.contactBox input[type="button"]:hover {
     background-color: lightgray;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

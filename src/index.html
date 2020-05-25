@@ -14,14 +14,14 @@
 
 </head>
 
-<nav class="mainnav">
-    <ul><a href="#login">LOGIN</a></ul>
-    <ul><a href="#main">MAIN</a></ul>
-    <ul><a href="#add">ADD</a></ul>
-    <ul><a href="#updateDelete">UPDATE-DELETE</a></ul>
-</nav>
-
 <body onload="getMap()">
+    <nav class="mainnav">
+        <ul><a href="#login">LOGIN</a></ul>
+        <ul><a href="#main">MAIN</a></ul>
+        <ul><a href="#add">ADD</a></ul>
+        <ul><a href="#updateDelete">UPDATE-DELETE</a></ul>
+    </nav>
+
     <section id="login">
         <div id="loginBox">
             <form action="#main" method="GET">
@@ -36,12 +36,13 @@
                     <p>
                         <label for="password">Passwort:</label>
                         <input type="password" id="passwordInput" name="password" placeholder="Passwort eingeben"
-                            required minlength="8" size="30" onkeyup="checkLoginInput()">
+                            required minlength="5" size="30" onkeyup="checkLoginInput()">
                     </p>
 
                     <p>
                         <label for="loginButton"></label>
-                        <input type="submit" id="loginButton" value="Anmelden" disabled onclick="isValidLoginData()">
+                        <input type="button" id="loginButton" value="Anmelden" disabled onclick="isValidLoginData()" >
+
                     </p>
                 </main>
 
@@ -50,13 +51,24 @@
     </section>
 
 
-    <section id="main">
-            <div id="mapBox">
-                <h1>MapView</h1>
-                <form>
+    <section id="main" style="display:none">
+        <div id="mapBox">
+            <h1>MapView</h1>
+            <form>
+                
+                <!-- div id="contactlist"></div> -->
+                
+                <ul id="contactlist">
+                    <!--
+                    <li><a onclick="hideSection('main');showSection('updateDelete')">Jeff</a></li>
+                    <li><a onclick="hideSection('main');showSection('updateDelete')">Hans</a></li>
+                    <li><a onclick="hideSection('main');showSection('updateDelete')">Peter</a></li>
+                    <li><a onclick="hideSection('main');showSection('updateDelete')">Jörg</a></li>
+                    -->
+                 </ul>
 
-                    <div id="map" style='height: 400px; width: 400px;'></div>
-                    <!-- <script>
+                <div id="map" style='height: 400px; width: 400px;'></div>
+                <!-- <script>
                         var map = L.map('map').setView([0, 0], 1);
                         L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
                             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
@@ -64,27 +76,18 @@
                         var marker = L.marker([52.520008, 13.404954]).addTo(map);
                     </script>
                     -->
-                    <div id="showAddBox">
-                        <form>
-                            <p>
-                                <input type="button" id="showButton" value="Anzeigen">
-                                <nav>
-                                    <a href="#add">
-                                        <input type="button" id="addButtonMain" value="Hinzufügen">
-                                    </a>
-                                </nav>
-                            </p>
-                            <p>
-                                <ul id="kontaktliste">
-                                    <li><a href="#updateDelete">Jeff</a></li>
-                                    <li><a href="#updateDelete">Hans</a></li>
-                                    <li><a href="#updateDelete">Peter</a></li>
-                                    <li><a href="#updateDelete">Jörg</a></li>
-                                </ul>
-                            </p>
-                        </form>
-                    </div>
-            </div>
+                <div id="showAddBox">
+                    <form>
+                        <p>
+                            <input type="button" id="showButton" value="Anzeigen">
+
+                            <input type="button" id="addButtonMain" value="Hinzufügen" onclick="hideSection('main');showSection('add')">
+
+                        </p>
+
+                    </form>
+                </div>
+        </div>
 
         </form>
 
@@ -93,39 +96,38 @@
 
 
 
-    <section id="add">
+    <section id="add" style="display:none">
         <div class=contactBox>
             <h1>Kontakt hinzufügen</h1>
             <form>
                 <p>
                     <label for="nameInputAdd">Name:</label>
-                    <input type="text" id="nameInputAdd" name="name" required size="30">
+                    <input type="text" id="nameInputAdd" name="name" required size="40" onkeyup="checkAddInput()">
                 </p>
 
                 <p>
                     <label for="vornameInputAdd">Vorname:</label>
-                    <input type="text" id="vornameInputAdd" name="vorname" required size="30">
+                    <input type="text" id="vornameInputAdd" name="vorname" required size="40" onkeyup="checkAddInput()">
                 </p>
 
                 <p>
                     <label for="strasseInputAdd">Strasse:</label>
-                    <input type="text" id="strasseInputAdd" name="strasse" required size="30">
+                    <input type="text" id="strasseInputAdd" name="strasse" required size="40" onkeyup="checkAddInput()">
                 </p>
 
                 <p>
                     <label for="postleitzahlInputAdd">Postleitzahl:</label>
-                    <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30"
-                        pattern="[0-9]{5}">
+                    <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="40" pattern="[0-9]{5}" onkeyup="checkAddInput()">
                 </p>
 
                 <p>
                     <label for="stadtInputAdd">Stadt:</label>
-                    <input type="text" id="stadtInputAdd" name="stadt" required size="30">
+                    <input type="text" id="stadtInputAdd" name="stadt" required size="40" onkeyup="checkAddInput()">
                 </p>
 
                 <p>
                     <label for="landInputAdd">Land:</label>
-                    <input type="text" id="landInputAdd" name="land" required size="30">
+                    <input type="text" id="landInputAdd" name="land" required size="40" onkeyup="checkAddInput()">
                 </p>
 
 
@@ -136,7 +138,8 @@
 
 
                 <p>
-                    <button type="button" id="addButtonAdd">Hinzufügen</button>
+                    <input type="button" id="backButtonAdd" onclick="hideSection('add');showSection('main');clearAddContactInput();" value="Zurück">
+                    <input type="button" id="addButtonAdd" disabled onclick="hideSection('add');showSection('main');addContact();" value="Hinzufügen">
                 </p>
             </form>
         </div>
@@ -144,49 +147,50 @@
     </section>
 
 
-    <section id="updateDelete">
+    <section id="updateDelete" style="display:none" onload="loadUpdateDeleteView()">
         <div class="contactBox">
             <h1>Daten bearbeiten</h1>
             <form>
                 <p>
-                    <label for="nameInputAdd">Name:</label>
-                    <input type="text" id="nameInputAdd" name="name" required size="30">
+                    <label for="nameInputUpdateDelete">Name:</label>
+                    <input type="text" id="nameInputUpdateDelete" name="name" required size="40">
                 </p>
 
                 <p>
-                    <label for="vornameInputAdd">Vorname:</label>
-                    <input type="text" id="vornameInputAdd" name="vorname" required size="30">
+                    <label for="vornameInputUpdateDelete">Vorname:</label>
+                    <input type="text" id="vornameInputUpdateDelete" name="vorname" required size="40">
                 </p>
 
                 <p>
-                    <label for="strasseInputAdd">Strasse:</label>
-                    <input type="text" id="strasseInputAdd" name="strasse" required size="30">
+                    <label for="strasseInputUpdateDelete">Strasse:</label>
+                    <input type="text" id="strasseInputUpdateDelete" name="strasse" required size="40">
                 </p>
 
                 <p>
-                    <label for="postleitzahlInputAdd">Postleitzahl:</label>
-                    <input type="text" id="postleitzahlInputAdd" name="postleitzahl" required size="30"
+                    <label for="postleitzahlInputUpdateDelete">Postleitzahl:</label>
+                    <input type="text" id="postleitzahlInputUpdateDelete" name="postleitzahl" required size="40"
                         pattern="^[0-9]$">
                 </p>
 
                 <p>
-                    <label for="stadtInputAdd">Stadt:</label>
-                    <input type="text" id="stadtInputAdd" name="stadt" required size="30">
+                    <label for="stadtInputUpdateDelete">Stadt:</label>
+                    <input type="text" id="stadtInputUpdateDelete" name="stadt" required size="40">
                 </p>
 
                 <p>
-                    <label for="landInputAdd">Land:</label>
-                    <input type="text" id="landInputAdd" name="land" required size="30">
+                    <label for="landInputUpdateDelete">Land:</label>
+                    <input type="text" id="landInputUpdateDelete" name="land" required size="40">
                 </p>
 
                 <p>
-                    <label for="privateCheckboxAdd">Privat:</label>
-                    <input type="checkbox" id="privateCheckboxAdd">
+                    <label for="privateCheckboxUpdateDelete">Privat:</label>
+                    <input type="checkbox" id="privateCheckboxUpdateDelete">
                 </p>
 
                 <p>
-                    <button type="button" id="updateButton">Update</button>
-                    <button type="button" id="deleteButton">Delete</button>
+                    <input type="button" id="backButtonUpdateDelete" onclick="hideSection('updateDelete');showSection('main');" value="Zurück">
+                    <input type="button" id="updateButton" onclick="hideSection('updateDelete');showSection('main')" value="Update">
+                    <input type="button" id="deleteButton" onclick="hideSection('updateDelete');showSection('main')" value="Delete">
                 </p>
             </form>
         </div>
