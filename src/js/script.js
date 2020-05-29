@@ -1,8 +1,8 @@
-var map = null;
-var markerlist = [];
-var loggedInUser = null;
+let map = null;
+let markerlist = [];
+let loggedInUser = null;
 
-var userlist = [
+let userlist = [
     {
       Username: 'admin',
       Password: 'adminpw',
@@ -15,7 +15,7 @@ var userlist = [
     }
 ]
 
-var contactlist = [
+let contactlist = [
     {
         Name: 'Abloh',
         Vorname: 'Virgil',
@@ -37,10 +37,83 @@ var contactlist = [
     }
 ]
 
+//eventListener to load map
+window.addEventListener('DOMContentLoaded', getMap, false);
+
+//eventListener - LoginView
+document.getElementById('loginButton').addEventListener('click', isValidLoginData);
+document.getElementById('usernameInput').addEventListener('keyup', checkLoginInput);
+document.getElementById('passwordInput').addEventListener('keyup', checkLoginInput);
+
+//eventListener - MainView
+document.getElementById('addButtonMain').addEventListener('click', function(){
+    hideSection('main');
+    showSection('add');
+});
+
+//eventListener - AddView
+document.getElementById('nameInputAdd').addEventListener('keyup', checkAddInput);
+document.getElementById('vornameInputAdd').addEventListener('keyup', checkAddInput);
+document.getElementById('strasseInputAdd').addEventListener('keyup', checkAddInput);
+document.getElementById('postleitzahlInputAdd').addEventListener('keyup', checkAddInput);
+document.getElementById('stadtInputAdd').addEventListener('keyup', checkAddInput);
+document.getElementById('landInputAdd').addEventListener('keyup', checkAddInput);
+
+document.getElementById('backButtonAdd').addEventListener('click', function(){
+    hideSection('add');
+    showSection('main');
+    clearAddContactInput();
+});
+document.getElementById('addButtonAdd').addEventListener('click', function(){
+    hideSection('add');
+    showSection('main');
+    addContact();
+});
+
+//eventListener - updateDelete
+document.getElementById('updateDelete').addEventListener('load', loadUpdateDeleteView);
+
+document.getElementById('nameInputUpdateDelete').addEventListener('keyup', checkUpdateDeleteInput);
+document.getElementById('vornameInputUpdateDelete').addEventListener('keyup', checkUpdateDeleteInput);
+document.getElementById('strasseInputUpdateDelete').addEventListener('keyup', checkUpdateDeleteInput);
+document.getElementById('postleitzahlInputUpdateDelete').addEventListener('keyup', checkUpdateDeleteInput);
+document.getElementById('stadtInputUpdateDelete').addEventListener('keyup', checkUpdateDeleteInput);
+document.getElementById('landInputUpdateDelete').addEventListener('keyup', checkUpdateDeleteInput);
+
+document.getElementById('backButtonUpdateDelete').addEventListener('click', function(){
+    hideSection('updateDelete');
+    showSection('main');
+});
+document.getElementById('updateButton').addEventListener('click', function(){
+    hideSection('updateDelete');
+    showSection('main');
+    updateContact();
+});
+document.getElementById('deleteButton').addEventListener('click', function(){
+    hideSection('updateDelete');
+    showSection('main');
+    deleteContact();
+});
+
+
+function checkUpdateDeleteInput(){
+    //TODO
+}
+
+function updateContact(){
+    //TODO: Mit api prüfen ob gültige adressen angegeben wurden!
+    //TODO
+}
+
+function deleteContact(){
+    //TODO
+
+}
+
 function checkLoginInput() {
-    var usernameInputValue = document.getElementById('usernameInput').value;
-    var passwordInputValue = document.getElementById('passwordInput').value;
-    var loginButton = document.getElementById('loginButton');
+    let usernameInputValue = document.getElementById('usernameInput').value;
+    let passwordInputValue = document.getElementById('passwordInput').value;
+    let loginButton = document.getElementById('loginButton');
     
     if (usernameInputValue.length > 0 && passwordInputValue.length > 0) {
         if (loginButton.disabled == true) {
@@ -54,11 +127,11 @@ function checkLoginInput() {
 }
 
 function isValidLoginData() {
-    var usernameInputValue = document.getElementById('usernameInput').value;
-    var passwordInputValue = document.getElementById('passwordInput').value;
+    let usernameInputValue = document.getElementById('usernameInput').value;
+    let passwordInputValue = document.getElementById('passwordInput').value;
 
     if (userlist.length){
-        for(var i = 0; i < userlist.length; i++) {
+        for(let i = 0; i < userlist.length; i++) {
             if(userlist[i].Username ===usernameInputValue && userlist[i].Password === passwordInputValue){
                 loggedInUser = userlist[i];
                 hideSection('login')
@@ -82,12 +155,12 @@ function loadMainView(){
 //loading contactlist -> wait until whole html is loaded
 function loadContacts(){  
     document.getElementById('contactlist').innerHTML = '';      //cleared die liste
-    var indexOfContact = 0;
+    let indexOfContact = 0;
     for(let index in contactlist){
         if(loggedInUser.Usertype === 'normal' && contactlist[index].Privat === true){
             //nothing
         }else{
-            var li = document.createElement('li');
+            let li = document.createElement('li');
             li.appendChild(document.createTextNode(contactlist[index].Vorname));
             
             li.addEventListener("click", function() {
@@ -108,28 +181,28 @@ function getMap() {
         L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
         }).addTo(map);
-        //marker = L.marker([52.520008, 13.404954]).addTo(map);
     }
     return map;
 
 }
 
 function loadMarker(){
-    markerlist.push(L.marker([52.520008, 13.404954]));  //berechnung von lat und long über die adressen der kontakte (Geoserarch) -> pushen
+    //TODO: berechnung von lat und long über die adressen der kontakte (Geoserarch) -> pushen in markerList
 
-    for(var i = 0; i < markerlist.length; i++){
+    markerlist.push(L.marker([52.520008, 13.404954])); 
+    for(let i = 0; i < markerlist.length; i++){
         markerlist[i].addTo(map);
     }
 }
 
 function checkAddInput() {
-    var nameInputValue = document.getElementById('nameInputAdd').value;
-    var vornameInputValue = document.getElementById('vornameInputAdd').value;
-    var strasseInputValue = document.getElementById('strasseInputAdd').value;
-    var postleitzahlInputValue = document.getElementById('postleitzahlInputAdd').value;
-    var stadtInputValue = document.getElementById('stadtInputAdd').value;
-    var landInputValue = document.getElementById('landInputAdd').value;
-    var addButton = document.getElementById('addButtonAdd');
+    let nameInputValue = document.getElementById('nameInputAdd').value;
+    let vornameInputValue = document.getElementById('vornameInputAdd').value;
+    let strasseInputValue = document.getElementById('strasseInputAdd').value;
+    let postleitzahlInputValue = document.getElementById('postleitzahlInputAdd').value;
+    let stadtInputValue = document.getElementById('stadtInputAdd').value;
+    let landInputValue = document.getElementById('landInputAdd').value;
+    let addButton = document.getElementById('addButtonAdd');
     
     if (nameInputValue.length > 0 && vornameInputValue.length > 0 && strasseInputValue.length > 0 && postleitzahlInputValue.length > 0 && stadtInputValue.length > 0 && landInputValue.length > 0) {
         if (addButton.disabled == true) {
@@ -143,13 +216,15 @@ function checkAddInput() {
 }
 
 function addContact() {
-    var nameInputValue = document.getElementById('nameInputAdd').value;
-    var vornameInputValue = document.getElementById('vornameInputAdd').value;
-    var strasseInputValue = document.getElementById('strasseInputAdd').value;
-    var postleitzahlInputValue = document.getElementById('postleitzahlInputAdd').value;
-    var stadtInputValue = document.getElementById('stadtInputAdd').value;
-    var landInputValue = document.getElementById('landInputAdd').value;
-    var privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
+    let nameInputValue = document.getElementById('nameInputAdd').value;
+    let vornameInputValue = document.getElementById('vornameInputAdd').value;
+    let strasseInputValue = document.getElementById('strasseInputAdd').value;
+    let postleitzahlInputValue = document.getElementById('postleitzahlInputAdd').value;
+    let stadtInputValue = document.getElementById('stadtInputAdd').value;
+    let landInputValue = document.getElementById('landInputAdd').value;
+    let privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
+
+    //TODO: Mit api prüfen ob gültige adressen angegeben wurden!
 
     contactlist.push({
         Name: nameInputValue,
@@ -204,11 +279,11 @@ function loadUpdateDeleteViewInput(contactIndex){
 }
 
 function showSection(sectionName){
-    var section = document.getElementById(sectionName);
+    let section = document.getElementById(sectionName);
     section.style.display = 'block';
 }
 
 function hideSection(sectionName){
-    var section = document.getElementById(sectionName);
+    let section = document.getElementById(sectionName);
     section.style.display = 'none';
 }

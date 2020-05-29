@@ -9,6 +9,18 @@ label {
     display: block;
 }
 
+#main {
+    display: none;
+}
+
+#add {
+    display: none;
+}
+
+#updateDelete {
+    display: none;
+}
+
 .mainnav {
     text-align: center;
     border-bottom: 1px solid #dbdbdb;
