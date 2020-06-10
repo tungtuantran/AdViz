@@ -178,7 +178,7 @@ function loadContacts(){
             li.appendChild(document.createTextNode(contactlist[index].Vorname));
             
             li.addEventListener("click", function() {
-                loadUpdateDeleteViewInput(index);
+                loadUpdateDeleteViewInput(index); //update contact daten
                 hideSection('main');
                 showSection('updateDelete');
             })
@@ -240,11 +240,11 @@ function addContact() {
     let landInputValue = document.getElementById('landInputAdd').value;
     let privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
 
-    let location = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
+    let address = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
     
     // eig besser in checkAddInput Methode 
     let geocoder = new google.maps.Geocoder(); 
-    geocoder.geocode({'address': location}, function(results, status) {
+    geocoder.geocode({'address': address}, function(results, status) {
         
         if (status === 'OK') {
             contactlist.push({
@@ -256,6 +256,13 @@ function addContact() {
                 Land: landInputValue,
                 Privat: privateCheckboxValue
             });
+
+            let marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map
+            });
+
+        
             alert("Erfolgreich hinzugefügt!");
         } else {
             alert("Ungültige Adresse!");
@@ -313,4 +320,23 @@ function showSection(sectionName){
 function hideSection(sectionName){
     let section = document.getElementById(sectionName);
     section.style.display = 'none';
+}
+
+function setMarker(address){
+    let geocoder = new google.maps.Geocoder(); 
+    
+    // let address = contactlist[contactIndex].Straße + " " + contactlist[contactIndex].Postleitzahl + " " + contactlist[contactIndex].Stadt; 
+   
+    
+    //adresse muss valide sein
+    geocoder.geocode({'address': address}, function(results, status) {
+        
+            let marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map
+            });
+           
+         
+    });
+        
 }
