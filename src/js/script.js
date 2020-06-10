@@ -1,6 +1,8 @@
-let map = null;
+let map;
 let markerlist = [];
 let loggedInUser = null;
+let key = "AIzaSyBZL09KP34CNElNufTGVtl71igrFb_abnM";
+
 
 let userlist = [
     {
@@ -37,8 +39,16 @@ let contactlist = [
     }
 ]
 
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 52.520008, lng: 13.404954 },
+    zoom: 8
+  });
+}
+
 //eventListener to load map
-window.addEventListener('DOMContentLoaded', getMap, false);
+// window.addEventListener('DOMContentLoaded', getMap, false);
 
 //eventListener - LoginView
 document.getElementById('loginButton').addEventListener('click', isValidLoginData);
@@ -110,6 +120,7 @@ function deleteContact(){
 
 }
 
+
 function checkLoginInput() {
     let usernameInputValue = document.getElementById('usernameInput').value;
     let passwordInputValue = document.getElementById('passwordInput').value;
@@ -155,7 +166,7 @@ function loadMainView(){
 //loading contactlist -> wait until whole html is loaded
 function loadContacts(){  
     document.getElementById('contactlist').innerHTML = '';      //cleared die liste
-    let indexOfContact = 0;
+    let indexOfContact = 0; // ???
     for(let index in contactlist){
         if(loggedInUser.Usertype === 'normal' && contactlist[index].Privat === true){
             //nothing
@@ -175,25 +186,25 @@ function loadContacts(){
 }
 
 
-function getMap() {
-    if (map == null) {
-        map = new L.map('map').setView([52.520008, 13.404954], 10);
-        L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
-            attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-        }).addTo(map);
-    }
-    return map;
+// function getMap() {
+//     if (map == null) {
+//         map = new L.map('map').setView([52.520008, 13.404954], 10);
+//         L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
+//             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+//         }).addTo(map);
+//     }
+//     return map;
 
-}
+// }
 
-function loadMarker(){
-    //TODO: berechnung von lat und long über die adressen der kontakte (Geoserarch) -> pushen in markerList
+// function loadMarker(){
+//     //TODO: berechnung von lat und long über die adressen der kontakte (Geoserarch) -> pushen in markerList
 
-    markerlist.push(L.marker([52.520008, 13.404954])); 
-    for(let i = 0; i < markerlist.length; i++){
-        markerlist[i].addTo(map);
-    }
-}
+//     markerlist.push(L.marker([52.520008, 13.404954])); 
+//     for(let i = 0; i < markerlist.length; i++){
+//         markerlist[i].addTo(map);
+//     }
+// }
 
 function checkAddInput() {
     let nameInputValue = document.getElementById('nameInputAdd').value;
@@ -215,6 +226,8 @@ function checkAddInput() {
     }
 }
 
+ 
+
 function addContact() {
     let nameInputValue = document.getElementById('nameInputAdd').value;
     let vornameInputValue = document.getElementById('vornameInputAdd').value;
@@ -224,18 +237,28 @@ function addContact() {
     let landInputValue = document.getElementById('landInputAdd').value;
     let privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
 
-    //TODO: Mit api prüfen ob gültige adressen angegeben wurden!
+    let location = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
+    
+    let geocoder = new google.maps.Geocoder(); 
+    geocoder.geocode({'address': location}, function(results, status) {
+        
+        if (status === 'OK') {
+            contactlist.push({
+                Name: nameInputValue,
+                Vorname: vornameInputValue,
+                Straße: strasseInputValue,
+                Postleitzahl: postleitzahlInputValue,
+                Stadt: stadtInputValue,
+                Land: landInputValue,
+                Privat: privateCheckboxValue
+            });
+            alert("Erfolgreich hinzugefügt!");
+        } else {
+            alert("Ungültige Adresse!");
+        }
+      });
 
-    contactlist.push({
-        Name: nameInputValue,
-        Vorname: vornameInputValue,
-        Straße: strasseInputValue,
-        Postleitzahl: postleitzahlInputValue,
-        Stadt: stadtInputValue,
-        Land: landInputValue,
-        Privat: privateCheckboxValue
-    })
-
+ 
     clearAddContactInput();
     loadMainView();
 }

@@ -7,15 +7,25 @@
     <title>AdViz</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <!-- <script type="text/javascript" src='js/script.js'></script> --> 
+    <!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
+    <!-- <script type="text/javascript" src='js/script.js'></script>  -->
     <script src="js/script.js" defer></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZL09KP34CNElNufTGVtl71igrFb_abnM&callback=initMap"
+      defer
+    ></script>
+
+    
 
     <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body>
+
+    
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZL09KP34CNElNufTGVtl71igrFb_abnM&callback=myMap"></script> -->
+
     <section id="login">
         <div id="loginBox">
             <form action="#main" method="GET">
@@ -50,7 +60,7 @@
             <form>                
                 <ul id="contactlist"></ul>
 
-                <div id="map" style='height: 400px; width: 400px;'></div>
+                <div id="map"></div>
 
                 <div id="showAddBox">
                     <form>
