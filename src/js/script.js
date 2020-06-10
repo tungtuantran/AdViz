@@ -111,11 +111,24 @@ function checkUpdateDeleteInput(){
 }
 
 function updateContact(){
+    
+    let strasseInputValue = document.getElementById('strasseInputUpdateDelete').value;
+    let postleitzahlInputValue = document.getElementById('postleitzahlInputUpdateDelete').value;
+    let stadtInputValue = document.getElementById('stadtInputUpdateDelete').value;
+
+    let address = strasseInputValue + " " + postleitzahlInputValue + " " + stadtInputValue;
+
+    let geocoder = new google.maps.Geocoder(); 
+    geocoder.geocode({'address': address}, function(results, status) {
+        
+        if (status === 'OK') {
+           alert("Wurde geupdatet!");
+        } else {
+            alert("Ungültige Adresse!");
+        }
+    });
 
     
-    
-    //TODO: Mit api prüfen ob gültige adressen angegeben wurden!
-    //TODO
 }
 
 function deleteContact(){
@@ -184,6 +197,8 @@ function loadContacts(){
             })
 
             document.getElementById('contactlist').appendChild(li);
+
+            setMarker(index);
         }
     }   
 }
@@ -257,11 +272,8 @@ function addContact() {
                 Privat: privateCheckboxValue
             });
 
-            let marker = new google.maps.Marker({
-                position: results[0].geometry.location,
-                map: map
-            });
-
+            clearAddContactInput();
+            loadMainView();
         
             alert("Erfolgreich hinzugefügt!");
         } else {
@@ -322,21 +334,17 @@ function hideSection(sectionName){
     section.style.display = 'none';
 }
 
-function setMarker(address){
+function setMarker(contactIndex){
+
+    let address = contactlist[contactIndex].Straße + " " + contactlist[contactIndex].Postleitzahl + " " + contactlist[contactIndex].Stadt;
     let geocoder = new google.maps.Geocoder(); 
-    
-    // let address = contactlist[contactIndex].Straße + " " + contactlist[contactIndex].Postleitzahl + " " + contactlist[contactIndex].Stadt; 
-   
-    
-    //adresse muss valide sein
     geocoder.geocode({'address': address}, function(results, status) {
         
+
             let marker = new google.maps.Marker({
                 position: results[0].geometry.location,
                 map: map
             });
-           
-         
+       
     });
-        
 }
