@@ -111,6 +111,9 @@ function checkUpdateDeleteInput(){
 }
 
 function updateContact(){
+
+    
+    
     //TODO: Mit api prüfen ob gültige adressen angegeben wurden!
     //TODO
 }
@@ -239,6 +242,7 @@ function addContact() {
 
     let location = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
     
+    // eig besser in checkAddInput Methode 
     let geocoder = new google.maps.Geocoder(); 
     geocoder.geocode({'address': location}, function(results, status) {
         
