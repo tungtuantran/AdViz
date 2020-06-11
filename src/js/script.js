@@ -1,5 +1,5 @@
 let map;
-let markerlist = [];
+//let markerlist = [];
 let loggedInUser = null;
 let key = "AIzaSyBZL09KP34CNElNufTGVtl71igrFb_abnM";
 
@@ -21,7 +21,7 @@ let contactlist = [
     {
         Name: 'Abloh',
         Vorname: 'Virgil',
-        Straße: 'Singerstraße 19',
+        Strasse: 'SingerStrasse 19',
         Postleitzahl: 10243,
         Stadt: 'Berlin',
         Land: 'Deutschland',
@@ -31,7 +31,7 @@ let contactlist = [
     {
         Name: 'Uzumaki',
         Vorname: 'Naruto',
-        Straße: 'Koppenstraße 18',
+        Strasse: 'KoppenStrasse 18',
         Postleitzahl: 10243,
         Stadt: 'Berlin',
         Land: 'Deutschland',
@@ -107,11 +107,26 @@ document.getElementById('deleteButton').addEventListener('click', function(){
 
 
 function checkUpdateDeleteInput(){
-    //TODO
+    let nameInputValue = document.getElementById('nameInputUpdateDelete').value;
+    let vornameInputValue = document.getElementById('vornameInputUpdateDelete').value;
+    let strasseInputValue = document.getElementById('strasseInputUpdateDelete').value;
+    let postleitzahlInputValue = document.getElementById('postleitzahlInputUpdateDelete').value;
+    let stadtInputValue = document.getElementById('stadtInputUpdateDelete').value;
+    let landInputValue = document.getElementById('landInputUpdateDelete').value;
+    let updateButton = document.getElementById('updateButton');
+    
+    if (nameInputValue.length > 0 && vornameInputValue.length > 0 && strasseInputValue.length > 0 && postleitzahlInputValue.length > 0 && stadtInputValue.length > 0 && landInputValue.length > 0) {
+        if (updateButton.disabled == true) {
+            updateButton.disabled = false;
+        }
+    } else {
+        if (updateButton.disabled == false) {
+            updateButton.disabled = true;
+        }
+    }
 }
 
 function updateContact(){
-    
     let strasseInputValue = document.getElementById('strasseInputUpdateDelete').value;
     let postleitzahlInputValue = document.getElementById('postleitzahlInputUpdateDelete').value;
     let stadtInputValue = document.getElementById('stadtInputUpdateDelete').value;
@@ -122,7 +137,9 @@ function updateContact(){
     geocoder.geocode({'address': address}, function(results, status) {
         
         if (status === 'OK') {
-           alert("Wurde geupdatet!");
+
+            //TODO UPDATE
+           alert("Erfolgreich geupdated!");
         } else {
             alert("Ungültige Adresse!");
         }
@@ -132,7 +149,7 @@ function updateContact(){
 }
 
 function deleteContact(){
-    //TODO
+    //TODO DELETE
 
 }
 
@@ -174,9 +191,8 @@ function loadMainView(){
         document.getElementById('addButtonMain').style.display = "none";
     }
     loadContacts();
-    loadMarker();
-
     loadUpdateDeleteView();
+
 }
 
 //loading contactlist -> wait until whole html is loaded
@@ -198,31 +214,23 @@ function loadContacts(){
 
             document.getElementById('contactlist').appendChild(li);
 
-            setMarker(index);
+            loadMarker(index);
         }
     }   
 }
 
-
-// function getMap() {
-//     if (map == null) {
-//         map = new L.map('map').setView([52.520008, 13.404954], 10);
-//         L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=1qtfM58qgmOj9AnhBv0N', {
-//             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-//         }).addTo(map);
-//     }
-//     return map;
-
-// }
-
-// function loadMarker(){
-//     //TODO: berechnung von lat und long über die adressen der kontakte (Geoserarch) -> pushen in markerList
-
-//     markerlist.push(L.marker([52.520008, 13.404954])); 
-//     for(let i = 0; i < markerlist.length; i++){
-//         markerlist[i].addTo(map);
-//     }
-// }
+function loadMarker(contactIndex){
+    let address = contactlist[contactIndex].Strasse + " " + contactlist[contactIndex].Postleitzahl + " " + contactlist[contactIndex].Stadt;
+    let geocoder = new google.maps.Geocoder(); 
+    geocoder.geocode({'address': address}, function(results, status) {
+            let marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map
+            });
+            
+            //markerlist.push(marker);
+    });
+}
 
 function checkAddInput() {
     let nameInputValue = document.getElementById('nameInputAdd').value;
@@ -244,8 +252,6 @@ function checkAddInput() {
     }
 }
 
- 
-
 function addContact() {
     let nameInputValue = document.getElementById('nameInputAdd').value;
     let vornameInputValue = document.getElementById('vornameInputAdd').value;
@@ -256,8 +262,6 @@ function addContact() {
     let privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
 
     let address = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
-    
-    // eig besser in checkAddInput Methode 
     let geocoder = new google.maps.Geocoder(); 
     geocoder.geocode({'address': address}, function(results, status) {
         
@@ -265,7 +269,7 @@ function addContact() {
             contactlist.push({
                 Name: nameInputValue,
                 Vorname: vornameInputValue,
-                Straße: strasseInputValue,
+                Strasse: strasseInputValue,
                 Postleitzahl: postleitzahlInputValue,
                 Stadt: stadtInputValue,
                 Land: landInputValue,
@@ -274,16 +278,10 @@ function addContact() {
 
             clearAddContactInput();
             loadMainView();
-        
-            alert("Erfolgreich hinzugefügt!");
         } else {
             alert("Ungültige Adresse!");
         }
       });
-
- 
-    clearAddContactInput();
-    loadMainView();
 }
 
 function clearAddContactInput(){
@@ -311,13 +309,13 @@ function loadUpdateDeleteView(){
         document.getElementById('updateButton').style.display = "none";
         document.getElementById('deleteButton').style.display = "none";
     }
+
 }
 
 function loadUpdateDeleteViewInput(contactIndex){
-    console.log(contactlist[contactIndex].Name);
     document.getElementById('nameInputUpdateDelete').value = contactlist[contactIndex].Name;
     document.getElementById('vornameInputUpdateDelete').value = contactlist[contactIndex].Vorname;
-    document.getElementById('strasseInputUpdateDelete').value = contactlist[contactIndex].Straße;
+    document.getElementById('strasseInputUpdateDelete').value = contactlist[contactIndex].Strasse;
     document.getElementById('postleitzahlInputUpdateDelete').value = contactlist[contactIndex].Postleitzahl;
     document.getElementById('stadtInputUpdateDelete').value = contactlist[contactIndex].Stadt;
     document.getElementById('landInputUpdateDelete').value = contactlist[contactIndex].Land;
@@ -332,19 +330,4 @@ function showSection(sectionName){
 function hideSection(sectionName){
     let section = document.getElementById(sectionName);
     section.style.display = 'none';
-}
-
-function setMarker(contactIndex){
-
-    let address = contactlist[contactIndex].Straße + " " + contactlist[contactIndex].Postleitzahl + " " + contactlist[contactIndex].Stadt;
-    let geocoder = new google.maps.Geocoder(); 
-    geocoder.geocode({'address': address}, function(results, status) {
-        
-
-            let marker = new google.maps.Marker({
-                position: results[0].geometry.location,
-                map: map
-            });
-       
-    });
 }
