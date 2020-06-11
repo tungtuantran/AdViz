@@ -21,7 +21,7 @@ let contactlist = [
     {
         Name: 'Abloh',
         Vorname: 'Virgil',
-        Strasse: 'SingerStrasse 19',
+        Strasse: 'Singerstraße 19',
         Postleitzahl: 10243,
         Stadt: 'Berlin',
         Land: 'Deutschland',
@@ -31,7 +31,7 @@ let contactlist = [
     {
         Name: 'Uzumaki',
         Vorname: 'Naruto',
-        Strasse: 'KoppenStrasse 18',
+        Strasse: 'Koppenstraße 18',
         Postleitzahl: 10243,
         Stadt: 'Berlin',
         Land: 'Deutschland',
@@ -75,8 +75,8 @@ document.getElementById('backButtonAdd').addEventListener('click', function(){
     clearAddContactInput();
 });
 document.getElementById('addButtonAdd').addEventListener('click', function(){
-    hideSection('add');
-    showSection('main');
+    //hideSection('add');
+    //showSection('main');
     addContact();
 });
 
@@ -95,13 +95,13 @@ document.getElementById('backButtonUpdateDelete').addEventListener('click', func
     showSection('main');
 });
 document.getElementById('updateButton').addEventListener('click', function(){
-    hideSection('updateDelete');
-    showSection('main');
+    //hideSection('updateDelete');
+    //showSection('main');
     updateContact();
 });
 document.getElementById('deleteButton').addEventListener('click', function(){
-    hideSection('updateDelete');
-    showSection('main');
+    //hideSection('updateDelete');
+    //showSection('main');
     deleteContact();
 });
 
@@ -127,33 +127,94 @@ function checkUpdateDeleteInput(){
 }
 
 function updateContact(){
-    
-    let strasseInputValue = document.getElementById('strasseInputUpdateDelete').value;
+    let nameInputValue = document.getElementById('nameInputUpdateDelete').value;
+    let vornameInputValue = document.getElementById('vornameInputUpdateDelete').value;
+    let strasseInputValue = document.getElementById('strasseInputUpdateDelete').value;           
     let postleitzahlInputValue = document.getElementById('postleitzahlInputUpdateDelete').value;
     let stadtInputValue = document.getElementById('stadtInputUpdateDelete').value;
+    let landInputValue = document.getElementById('landInputUpdateDelete').value;
+    let privateCheckboxValue = document.getElementById('privateCheckboxUpdateDelete').checked;
 
     let address = strasseInputValue + " " + postleitzahlInputValue + " " + stadtInputValue;
 
     let geocoder = new google.maps.Geocoder(); 
-    geocoder.geocode({'address': address}, function(results, status) {
-        
+    geocoder.geocode({'address': address}, function(results, status) {     
         if (status === 'OK') {
-            
 
-                //TODO UPDATE
-               alert("Erfolgreich geupdated!");
-            } else {
+            let componentCounter = 0; 
+            let validAddress = true;
+
+            for(let i in results[0].address_components){
+                let component = results[0].address_components[i];
+                for(typeIndex in component.types) {
+                    switch(component.types[typeIndex]){
+                        case 'route':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== strasseInputValue.split(" ")[0] && component.short_name !== strasseInputValue.split(" ")[0]) {
+                                validAddress = false;
+                            }
+                            break;
+                        case 'street_number':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== strasseInputValue.split(" ")[1] && component.short_name !== strasseInputValue.split(" ")[1]) {
+                                validAddress = false;
+                            }
+                            break;
+                        case 'postal_code':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== postleitzahlInputValue && component.short_name !== postleitzahlInputValue) {
+                                validAddress = false;
+                            }
+                            break;
+                        case 'administrative_area_level_1':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== stadtInputValue && component.short_name !== stadtInputValue) {
+                                validAddress = false;
+                                componentCounter++;
+                            }
+                            break;
+                        case 'country':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== landInputValue && component.short_name !== landInputValue) {
+                                validAddress = false;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }                
+            }
+        
+            //for case that no streetnumber is given
+            if((componentCounter === 4 || componentCounter === 5) && validAddress === true){
+                
+                //TODO: UPDATE
+                alert("Erfolgreich geupdated!");
+
+                loadMainView();
+                hideSection('updateDelete');
+                showSection('main'); 
+            }else{
                 alert("Ungültige Adresse!");
             }
-        });
-    
+        } else {
+            alert("Ungültige Adresse!");
+        }
+    });
 }
 
 function deleteContact(){
-    //TODO
-
+    //TODO: DELETE
+    loadMainView();
+    hideSection('updateDelete');
+    showSection('main'); 
+    alert("Erfolgreich gelöscht!");
 }
-
 
 function checkLoginInput() {
     let usernameInputValue = document.getElementById('usernameInput').value;
@@ -198,7 +259,6 @@ function loadMainView(){
 //loading contactlist -> wait until whole html is loaded
 function loadContacts(){  
     document.getElementById('contactlist').innerHTML = '';      //cleared die liste
-    let indexOfContact = 0; // ???
     for(let index in contactlist){
         if(loggedInUser.Usertype === 'normal' && contactlist[index].Privat === true){
             //nothing
@@ -251,46 +311,93 @@ function checkAddInput() {
         }
     }
 }
-
  
-
 function addContact() {
     let nameInputValue = document.getElementById('nameInputAdd').value;
     let vornameInputValue = document.getElementById('vornameInputAdd').value;
-    let strasseInputValue = document.getElementById('strasseInputAdd').value;
+    let strasseInputValue = document.getElementById('strasseInputAdd').value;           
     let postleitzahlInputValue = document.getElementById('postleitzahlInputAdd').value;
     let stadtInputValue = document.getElementById('stadtInputAdd').value;
     let landInputValue = document.getElementById('landInputAdd').value;
     let privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
 
     let address = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
-    
    
     let geocoder = new google.maps.Geocoder(); 
-    geocoder.geocode({'address': address}, function(results, status) {
-        
+    geocoder.geocode({'address': address}, function(results, status) {     
         if (status === 'OK') {
-            validateAddress(address);
-            contactlist.push({
-                Name: nameInputValue,
-                Vorname: vornameInputValue,
-                Strasse: strasseInputValue,
-                Postleitzahl: postleitzahlInputValue,
-                Stadt: stadtInputValue,
-                Land: landInputValue,
-                Privat: privateCheckboxValue
-            });
 
-            clearAddContactInput();
-            loadMainView();
+            let componentCounter = 0; 
+            let validAddress = true;
+
+            for(let i in results[0].address_components){
+                let component = results[0].address_components[i];
+                for(typeIndex in component.types) {
+                    switch(component.types[typeIndex]){
+                        case 'route':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== strasseInputValue.split(" ")[0] && component.short_name !== strasseInputValue.split(" ")[0]) {
+                                validAddress = false;
+                            }
+                            break;
+                        case 'street_number':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== strasseInputValue.split(" ")[1] && component.short_name !== strasseInputValue.split(" ")[1]) {
+                                validAddress = false;
+                            }
+                            break;
+                        case 'postal_code':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== postleitzahlInputValue && component.short_name !== postleitzahlInputValue) {
+                                validAddress = false;
+                            }
+                            break;
+                        case 'administrative_area_level_1':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== stadtInputValue && component.short_name !== stadtInputValue) {
+                                validAddress = false;
+                                componentCounter++;
+                            }
+                            break;
+                        case 'country':
+                            componentCounter++;
+                            console.log(component.long_name + " " + component.short_name);
+                            if(component.long_name !== landInputValue && component.short_name !== landInputValue) {
+                                validAddress = false;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }                
+            }
         
-            
+            //for case that no streetnumber is given
+            if((componentCounter === 4 || componentCounter === 5) && validAddress === true){
+                contactlist.push({
+                    Name: nameInputValue,
+                    Vorname: vornameInputValue,
+                    Strasse: strasseInputValue,
+                    Postleitzahl: postleitzahlInputValue,
+                    Stadt: stadtInputValue,
+                    Land: landInputValue,
+                    Privat: privateCheckboxValue
+                });
+                clearAddContactInput();
+                loadMainView();
+                hideSection('add');
+                showSection('main'); 
+            }else{
+                alert("Ungültige Adresse!");
+            }
         } else {
             alert("Ungültige Adresse!");
         }
-      });
-
- 
+    });
 
 }
 
@@ -321,8 +428,7 @@ function loadUpdateDeleteView(){
     }
 }
 
-function loadUpdateDeleteViewInput(contactIndex){
-    
+function loadUpdateDeleteViewInput(contactIndex){ 
     document.getElementById('nameInputUpdateDelete').value = contactlist[contactIndex].Name;
     document.getElementById('vornameInputUpdateDelete').value = contactlist[contactIndex].Vorname;
     document.getElementById('strasseInputUpdateDelete').value = contactlist[contactIndex].Strasse;
@@ -341,78 +447,3 @@ function hideSection(sectionName){
     let section = document.getElementById(sectionName);
     section.style.display = 'none';
 }
-
-
-
-
-
-function validateAddress(address){
-    let geocoder = new google.maps.Geocoder(); 
-    geocoder.geocode({'address': address}, function(results, status){
-
-        console.log("baba");
-        for(let i in results[0]){
-            
-            // for(let j in results[0][i].types){
-            //     console.log("got in2");
-            //     if (results[0][i].types[j] == "country") {
-            //         console.log(results.address_components[i].types[j]);
-            //         console.log("got in");
-            //     }
-            }
-        // }
-
-        // for (let i in results[0]){
-        //     for(let j in results[0][j].types){
-        //         if (results.address_components[i].types[j] == "country") {
-        //             console.log(results.address_components[i].types[j]);
-        //         }
-        //     }
-
-        // }
-
-
-        // for (let i = 0; i < results.address_components.length; i++) {
-        //     for (let j = 0; j < results.address_components[i].types.length; j++) {
-
-        //         if (results.address_components[i].types[j] == "country") {
-        //             console.log(results.address_components[i].types[j]);
-        //         }
-              
-            //     if (results.address_components[i].types[j] == "country") {
-            //     if(results.address_components[i].types[j] != document.getElementById('landInputAdd').value){
-            //         return false;
-            //     }
-            //   }
-
-            //   if(results.address_components[i].types[j] == "postal_code"){
-            //     if(results.address_components[i].types[j] != document.getElementById('postleitzahlInputAdd').value){
-            //         return false;
-            //     }
-            //   }
-
-            //   if(results.address_components[i].types[j] == "locality"){
-            //     if(results.address_components[i].types[j] != document.getElementById('stadtInputAdd').value){
-            //         return false;
-            //     }
-            //   }
-
-            //   if(results.address_components[i].types[j] == "street_address"){
-            //     if(results.address_components[i].types[j] != document.getElementById('strasseInputAdd').value){
-            //         return false;
-            //     }
-            //   }
-
-
-        //     }
-        //   }
-
-        //   return true;
-
-    
-     });
-
-}
-
-
-
