@@ -127,6 +127,7 @@ function checkUpdateDeleteInput(){
 }
 
 function updateContact(){
+    
     let strasseInputValue = document.getElementById('strasseInputUpdateDelete').value;
     let postleitzahlInputValue = document.getElementById('postleitzahlInputUpdateDelete').value;
     let stadtInputValue = document.getElementById('stadtInputUpdateDelete').value;
@@ -137,19 +138,19 @@ function updateContact(){
     geocoder.geocode({'address': address}, function(results, status) {
         
         if (status === 'OK') {
+            
 
-            //TODO UPDATE
-           alert("Erfolgreich geupdated!");
-        } else {
-            alert("Ungültige Adresse!");
-        }
-    });
-
+                //TODO UPDATE
+               alert("Erfolgreich geupdated!");
+            } else {
+                alert("Ungültige Adresse!");
+            }
+        });
     
 }
 
 function deleteContact(){
-    //TODO DELETE
+    //TODO
 
 }
 
@@ -192,7 +193,6 @@ function loadMainView(){
     }
     loadContacts();
     loadUpdateDeleteView();
-
 }
 
 //loading contactlist -> wait until whole html is loaded
@@ -218,7 +218,6 @@ function loadContacts(){
         }
     }   
 }
-
 function loadMarker(contactIndex){
     let address = contactlist[contactIndex].Strasse + " " + contactlist[contactIndex].Postleitzahl + " " + contactlist[contactIndex].Stadt;
     let geocoder = new google.maps.Geocoder(); 
@@ -231,6 +230,7 @@ function loadMarker(contactIndex){
             //markerlist.push(marker);
     });
 }
+
 
 function checkAddInput() {
     let nameInputValue = document.getElementById('nameInputAdd').value;
@@ -252,6 +252,8 @@ function checkAddInput() {
     }
 }
 
+ 
+
 function addContact() {
     let nameInputValue = document.getElementById('nameInputAdd').value;
     let vornameInputValue = document.getElementById('vornameInputAdd').value;
@@ -262,10 +264,13 @@ function addContact() {
     let privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
 
     let address = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
+    
+   
     let geocoder = new google.maps.Geocoder(); 
     geocoder.geocode({'address': address}, function(results, status) {
         
         if (status === 'OK') {
+            validateAddress(address);
             contactlist.push({
                 Name: nameInputValue,
                 Vorname: vornameInputValue,
@@ -278,10 +283,15 @@ function addContact() {
 
             clearAddContactInput();
             loadMainView();
+        
+            
         } else {
             alert("Ungültige Adresse!");
         }
       });
+
+ 
+
 }
 
 function clearAddContactInput(){
@@ -309,10 +319,10 @@ function loadUpdateDeleteView(){
         document.getElementById('updateButton').style.display = "none";
         document.getElementById('deleteButton').style.display = "none";
     }
-
 }
 
 function loadUpdateDeleteViewInput(contactIndex){
+    
     document.getElementById('nameInputUpdateDelete').value = contactlist[contactIndex].Name;
     document.getElementById('vornameInputUpdateDelete').value = contactlist[contactIndex].Vorname;
     document.getElementById('strasseInputUpdateDelete').value = contactlist[contactIndex].Strasse;
@@ -331,3 +341,78 @@ function hideSection(sectionName){
     let section = document.getElementById(sectionName);
     section.style.display = 'none';
 }
+
+
+
+
+
+function validateAddress(address){
+    let geocoder = new google.maps.Geocoder(); 
+    geocoder.geocode({'address': address}, function(results, status){
+
+        console.log("baba");
+        for(let i in results[0]){
+            
+            // for(let j in results[0][i].types){
+            //     console.log("got in2");
+            //     if (results[0][i].types[j] == "country") {
+            //         console.log(results.address_components[i].types[j]);
+            //         console.log("got in");
+            //     }
+            }
+        // }
+
+        // for (let i in results[0]){
+        //     for(let j in results[0][j].types){
+        //         if (results.address_components[i].types[j] == "country") {
+        //             console.log(results.address_components[i].types[j]);
+        //         }
+        //     }
+
+        // }
+
+
+        // for (let i = 0; i < results.address_components.length; i++) {
+        //     for (let j = 0; j < results.address_components[i].types.length; j++) {
+
+        //         if (results.address_components[i].types[j] == "country") {
+        //             console.log(results.address_components[i].types[j]);
+        //         }
+              
+            //     if (results.address_components[i].types[j] == "country") {
+            //     if(results.address_components[i].types[j] != document.getElementById('landInputAdd').value){
+            //         return false;
+            //     }
+            //   }
+
+            //   if(results.address_components[i].types[j] == "postal_code"){
+            //     if(results.address_components[i].types[j] != document.getElementById('postleitzahlInputAdd').value){
+            //         return false;
+            //     }
+            //   }
+
+            //   if(results.address_components[i].types[j] == "locality"){
+            //     if(results.address_components[i].types[j] != document.getElementById('stadtInputAdd').value){
+            //         return false;
+            //     }
+            //   }
+
+            //   if(results.address_components[i].types[j] == "street_address"){
+            //     if(results.address_components[i].types[j] != document.getElementById('strasseInputAdd').value){
+            //         return false;
+            //     }
+            //   }
+
+
+        //     }
+        //   }
+
+        //   return true;
+
+    
+     });
+
+}
+
+
+
