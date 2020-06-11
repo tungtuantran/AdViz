@@ -321,6 +321,22 @@ function addContact() {
     let landInputValue = document.getElementById('landInputAdd').value;
     let privateCheckboxValue = document.getElementById('privateCheckboxAdd').checked;
 
+    //seperate streetadress from streetnumber
+    let splittedStreetAddress = strasseInputValue.split(" ");
+    console.log(splittedStreetAddress);
+
+    let streetNumber = "";
+    for(let i = 0; i < splittedStreetAddress.length; i++){
+        //includes number
+        if(/\d/.test(splittedStreetAddress[i])){
+            streetNumber = splittedStreetAddress[i];
+            splittedStreetAddress.splice(splittedStreetAddress.indexOf(i), 1);
+        }
+    }
+    console.log(streetNumber);
+    console.log(splittedStreetAddress);
+
+
     let address = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
    
     let geocoder = new google.maps.Geocoder(); 
@@ -336,15 +352,15 @@ function addContact() {
                     switch(component.types[typeIndex]){
                         case 'route':
                             componentCounter++;
-                            console.log(component.long_name + " " + component.short_name);
-                            if(component.long_name !== strasseInputValue.split(" ")[0] && component.short_name !== strasseInputValue.split(" ")[0]) {
+                            console.log(component.long_name + " " + component.short_name + " " + splittedStreetAddress.toString().replace(","," ") );
+                            if(component.long_name !== splittedStreetAddress.toString().replace(","," ") && component.short_name !== splittedStreetAddress.toString().replace(","," ")) {
                                 validAddress = false;
                             }
                             break;
                         case 'street_number':
                             componentCounter++;
-                            console.log(component.long_name + " " + component.short_name);
-                            if(component.long_name !== strasseInputValue.split(" ")[1] && component.short_name !== strasseInputValue.split(" ")[1]) {
+                            console.log(component.long_name + " " + component.short_name + " " + streetNumber);
+                            if(component.long_name !== streetNumber && component.short_name !== streetNumber) {
                                 validAddress = false;
                             }
                             break;
