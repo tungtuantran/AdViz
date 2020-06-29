@@ -1,9 +1,13 @@
 let map;
 //let markerlist = [];
 let loggedInUser = null;
+let IdOfContactToUpdateDelete;
 let key = "AIzaSyBZL09KP34CNElNufTGVtl71igrFb_abnM";
 
+const host = 'localhost';
+const port = '8080';
 
+//SQL: userid (=username), password, firstname, lastname, isAdmin (TINYINT (= boolean)) (=Usertype)
 let userlist = [
     {
       Username: 'admin',
@@ -17,28 +21,65 @@ let userlist = [
     }
 ]
 
-let contactlist = [
-    {
-        Name: 'Abloh',
-        Vorname: 'Virgil',
-        Strasse: 'Singerstraße 19',
-        Postleitzahl: 10243,
-        Stadt: 'Berlin',
-        Land: 'Deutschland',
-        Privat: true
+//SQL: contactid, lastname, firstname, street, zipcode, city, country, isPrivate
+let contactlist = [];
 
-    },
-    {
-        Name: 'Uzumaki',
-        Vorname: 'Naruto',
-        Strasse: 'Koppenstraße 18',
-        Postleitzahl: 10243,
-        Stadt: 'Berlin',
-        Land: 'Deutschland',
-        Privat: false
+function fillContactListWithDBData() {
+    console.log("got in fill");
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://' + host + ':' + port + '/AdViz/contacts');
+    console.log("open get request");
+    xhr.onload = () => {
+        const data = xhr.response;
+        console.log("the data: " + data);
+
+        jsonData = JSON.parse(data);
+        console.log(jsonData);
+
+        //clear list first
+        contactlist = [];
+
+        for(let i = 0; i < jsonData.length; i++){
+            let isPrivate = false;
+            if(jsonData[i].isPrivate == 1){
+                isPrivate = true;
+            }
+            contactlist.push(
+                {
+                    KontaktId: jsonData[i].contactid,
+                    Name: jsonData[i].lastname,
+                    Vorname: jsonData[i].firstname,
+                    Strasse: jsonData[i].street,
+                    Postleitzahl: jsonData[i].zipcode,
+                    Stadt: jsonData[i].city,
+                    Land: jsonData[i].country,
+                    Privat: isPrivate               
+                }
+            );
+            if(loggedInUser.Usertype === 'normal' && contactlist[i].Privat === true){
+                //nothing
+            }else{
+                let li = document.createElement('li');
+                li.appendChild(document.createTextNode(contactlist[i].Vorname));
+                console.log("created textnode of " + contactlist[i].Vorname);
+                li.addEventListener("click", function() {
+                    loadUpdateDeleteViewInput(i); //update contact daten
+                    hideSection('main');
+                    showSection('updateDelete');
+                })
+
+                document.getElementById('contactlist').appendChild(li);
+                console.log("appendes textnode of " + contactlist[i].Vorname);
+
+            loadMarker(i);
+            }
+        }
     }
-]
-
+    console.log("finish loading and all contacts added");
+    
+    xhr.send(); 
+}
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -46,6 +87,7 @@ function initMap() {
     zoom: 8
   });
 }
+
 
 //eventListener to load map
 // window.addEventListener('DOMContentLoaded', getMap, false);
@@ -194,6 +236,24 @@ function updateContact(){
             if((componentCounter === 4 || componentCounter === 5) && validAddress === true){
                 
                 //TODO: UPDATE
+                let isPrivate = true;
+                if(!privateCheckboxValue){
+                    isPrivate = false;
+                }
+
+                let xmlhttp = new XMLHttpRequest(); 
+                xmlhttp.open("PUT", 'http://' + host + ':' + port + '/AdViz/contacts/' + IdOfContactToUpdateDelete);
+                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xmlhttp.send(JSON.stringify({ 
+                    "lastname": nameInputValue,
+                    "firstname": vornameInputValue,
+                    "street": strasseInputValue,
+                    "zipcode": postleitzahlInputValue,
+                    "city": stadtInputValue,
+                    "country": landInputValue,
+                    "isPrivate": isPrivate
+                }));
+
                 alert("Erfolgreich geupdated!");
 
                 loadMainView();
@@ -209,7 +269,10 @@ function updateContact(){
 }
 
 function deleteContact(){
-    //TODO: DELETE
+    let xmlhttp = new XMLHttpRequest(); 
+    xmlhttp.open("DELETE", 'http://' + host + ':' + port + '/AdViz/contacts/' + IdOfContactToUpdateDelete);
+    xmlhttp.send();
+
     loadMainView();
     hideSection('updateDelete');
     showSection('main'); 
@@ -243,41 +306,41 @@ function isValidLoginData() {
                 hideSection('login')
                 showSection('main');
                 loadMainView();
+                alert("Willkommen " + loggedInUser.Username +"!");
+                return;
+            }else{
+                alert("Falsche Nutzername/Passwort-Kombination!");
+                return;
             }
         }
     }
+
+    //REPLACE
+
 }
 
 function loadMainView(){
     if(loggedInUser.Usertype === 'normal'){
         document.getElementById('addButtonMain').style.display = "none";
     }
+    console.log("im about to load the main");
+
     loadContacts();
+    console.log("finish loading contacts");
+
     loadUpdateDeleteView();
 }
 
 //loading contactlist -> wait until whole html is loaded
 function loadContacts(){  
+    //clear list in view and clear the actually list
     document.getElementById('contactlist').innerHTML = '';      //cleared die liste
-    for(let index in contactlist){
-        if(loggedInUser.Usertype === 'normal' && contactlist[index].Privat === true){
-            //nothing
-        }else{
-            let li = document.createElement('li');
-            li.appendChild(document.createTextNode(contactlist[index].Vorname));
-            
-            li.addEventListener("click", function() {
-                loadUpdateDeleteViewInput(index); //update contact daten
-                hideSection('main');
-                showSection('updateDelete');
-            })
 
-            document.getElementById('contactlist').appendChild(li);
-
-            loadMarker(index);
-        }
-    }   
+    //fill the list again with data from DB
+    fillContactListWithDBData();
+  
 }
+
 function loadMarker(contactIndex){
     let address = contactlist[contactIndex].Strasse + " " + contactlist[contactIndex].Postleitzahl + " " + contactlist[contactIndex].Stadt;
     let geocoder = new google.maps.Geocoder(); 
@@ -336,7 +399,6 @@ function addContact() {
     console.log(streetNumber);
     console.log(splittedStreetAddress);
 
-
     let address = strasseInputValue + " " + postleitzahlInputValue + " " +  stadtInputValue;
    
     let geocoder = new google.maps.Geocoder(); 
@@ -394,19 +456,29 @@ function addContact() {
         
             //for case that no streetnumber is given
             if((componentCounter === 4 || componentCounter === 5) && validAddress === true){
-                contactlist.push({
-                    Name: nameInputValue,
-                    Vorname: vornameInputValue,
-                    Strasse: strasseInputValue,
-                    Postleitzahl: postleitzahlInputValue,
-                    Stadt: stadtInputValue,
-                    Land: landInputValue,
-                    Privat: privateCheckboxValue
-                });
+                let isPrivate = 1;
+                if(!privateCheckboxValue){
+                    isPrivate = 0;
+                }
+
+                let xmlhttp = new XMLHttpRequest(); 
+                xmlhttp.open("POST", 'http://' + host + ':' + port + '/AdViz/contacts');
+                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xmlhttp.send(JSON.stringify({ 
+                    "lastname": nameInputValue,
+                    "firstname": vornameInputValue,
+                    "street": strasseInputValue,
+                    "zipcode": postleitzahlInputValue,
+                    "city": stadtInputValue,
+                    "country": landInputValue,
+                    "isPrivate": isPrivate
+                }));
+
                 clearAddContactInput();
                 loadMainView();
                 hideSection('add');
                 showSection('main'); 
+                alert("Erfolgreich Kontakt hinzugefügt!");
             }else{
                 alert("Ungültige Adresse!");
             }
@@ -445,6 +517,7 @@ function loadUpdateDeleteView(){
 }
 
 function loadUpdateDeleteViewInput(contactIndex){ 
+    IdOfContactToUpdateDelete = contactlist[contactIndex].KontaktId;
     document.getElementById('nameInputUpdateDelete').value = contactlist[contactIndex].Name;
     document.getElementById('vornameInputUpdateDelete').value = contactlist[contactIndex].Vorname;
     document.getElementById('strasseInputUpdateDelete').value = contactlist[contactIndex].Strasse;
@@ -462,4 +535,17 @@ function showSection(sectionName){
 function hideSection(sectionName){
     let section = document.getElementById(sectionName);
     section.style.display = 'none';
+}
+
+
+function jsonToObjectContact(row){
+    return {
+        Name: row.lastname,
+        Vorname: row.firstname,
+        Strasse: row.street,
+        Postleitzahl: row.zipcode,
+        Stadt: row.city,
+        Land: row.country,
+        Privat: row.isPrivate
+    };
 }
