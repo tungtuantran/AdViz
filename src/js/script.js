@@ -1,3 +1,4 @@
+
 let map;
 //let markerlist = [];
 let loggedInUser = null;
@@ -20,6 +21,64 @@ let userlist = [
       Usertype: 'normal'
     }
 ]
+
+function fillContactListWithDBData() {
+    console.log("got in fill");
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://' + host + ':' + port + '/AdViz/contacts');
+    console.log("open get request");
+    xhr.onload = () => {
+        const data = xhr.response;
+        console.log("the data: " + data);
+
+        jsonData = JSON.parse(data);
+        console.log(jsonData);
+
+        //clear list first
+        contactlist = [];
+
+        for(let i = 0; i < jsonData.length; i++){
+            let isPrivate = false;
+            if(jsonData[i].isPrivate == 1){
+                isPrivate = true;
+            }
+            contactlist.push(
+                {
+                    KontaktId: jsonData[i].contactid,
+                    Name: jsonData[i].lastname,
+                    Vorname: jsonData[i].firstname,
+                    Strasse: jsonData[i].street,
+                    Postleitzahl: jsonData[i].zipcode,
+                    Stadt: jsonData[i].city,
+                    Land: jsonData[i].country,
+                    Privat: isPrivate               
+                }
+            );
+            if(loggedInUser.Usertype === 'normal' && contactlist[i].Privat === true){
+                //nothing
+            }else{
+                let li = document.createElement('li');
+                li.appendChild(document.createTextNode(contactlist[i].Vorname));
+                console.log("created textnode of " + contactlist[i].Vorname);
+                li.addEventListener("click", function() {
+                    loadUpdateDeleteViewInput(i); //update contact daten
+                    hideSection('main');
+                    showSection('updateDelete');
+                })
+
+                document.getElementById('contactlist').appendChild(li);
+                console.log("appendes textnode of " + contactlist[i].Vorname);
+
+            loadMarker(i);
+            }
+        }
+    }
+    console.log("finish loading and all contacts added");
+    
+    xhr.send(); 
+}
+
 
 //SQL: contactid, lastname, firstname, street, zipcode, city, country, isPrivate
 let contactlist = [];
@@ -101,6 +160,11 @@ document.getElementById('passwordInput').addEventListener('keyup', checkLoginInp
 document.getElementById('addButtonMain').addEventListener('click', function(){
     hideSection('main');
     showSection('add');
+});
+document.getElementById('logoutButtonMain').addEventListener('click', function(){
+    loggedInUser = null;
+    hideSection('main');
+    showSection('login');
 });
 
 //eventListener - AddView
@@ -298,30 +362,87 @@ function checkLoginInput() {
 function isValidLoginData() {
     let usernameInputValue = document.getElementById('usernameInput').value;
     let passwordInputValue = document.getElementById('passwordInput').value;
+    
+    let xmlhttp = new XMLHttpRequest(); 
+    xmlhttp.open("POST", 'http://' + host + ':' + port + '/AdViz/login');
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            
+    xmlhttp.send(JSON.stringify({ 
+        "userid": usernameInputValue,
+        "password": passwordInputValue
+    }));
 
-    if (userlist.length){
-        for(let i = 0; i < userlist.length; i++) {
-            if(userlist[i].Username ===usernameInputValue && userlist[i].Password === passwordInputValue){
-                loggedInUser = userlist[i];
+    xmlhttp.onload = () => {
+        const data = xmlhttp.response;
+        console.log("the data: " + data);
+        
+        if(data.length > 0){
+            jsonData = JSON.parse(data);
+            console.log(jsonData);
+
+            let usertype = 'normal';
+            if(jsonData.isAdmin == 1){
+                usertype = 'admin'
+            }
+
+            loggedInUser = {
+                Username: jsonData.userid,
+                Name: jsonData.lastname,
+                Vorname: jsonData.firstname,
+                Usertype: usertype
+            }
+
+            if(xmlhttp.status === 200){
                 hideSection('login')
                 showSection('main');
                 loadMainView();
-                alert("Willkommen " + loggedInUser.Username +"!");
-                return;
-            }else{
-                alert("Falsche Nutzername/Passwort-Kombination!");
+                alert("Willkommen " + loggedInUser.Vorname + " " + loggedInUser.Name +"! Eingeloggt als " + loggedInUser.Usertype + ".");
+                
+                //clear login input
+                document.getElementById('usernameInput').value = "";
+                document.getElementById('passwordInput').value = "";
                 return;
             }
+        } else {
+            alert("Falsche Nutzername/Passwort-Kombination!");
+            return;
+        }
+        /*
+        if(xmlhttp.status === 200){
+            hideSection('login')
+            showSection('main');
+            loadMainView();
+            alert("Willkommen " + loggedInUser.Vorname + " " + loggedInUser.Name +"!");
+            return;
+        }else{
+            alert("Falsche Nutzername/Passwort-Kombination!");
+            return;
+        }
+        */
+    }
+    /*
+    xmlhttp.onreadystatechange = function () {
+        if(xmlhttp.status === 200){
+            hideSection('login')
+            showSection('main');
+            loadMainView();
+            alert("Willkommen " + loggedInUser.Vorname + " " + loggedInUser.Name +"!");
+            return;
+        }else{
+            alert("Falsche Nutzername/Passwort-Kombination!");
+            return;
         }
     }
-
-    //REPLACE
-
+    */
+            
 }
 
 function loadMainView(){
+
     if(loggedInUser.Usertype === 'normal'){
         document.getElementById('addButtonMain').style.display = "none";
+    }else{
+        document.getElementById('addButtonMain').style.display = "inline-block";
     }
     console.log("im about to load the main");
 
@@ -513,6 +634,17 @@ function loadUpdateDeleteView(){
 
         document.getElementById('updateButton').style.display = "none";
         document.getElementById('deleteButton').style.display = "none";
+    }else{
+        document.getElementById('nameInputUpdateDelete').disabled = false;
+        document.getElementById('vornameInputUpdateDelete').disabled = false;
+        document.getElementById('strasseInputUpdateDelete').disabled = false;
+        document.getElementById('postleitzahlInputUpdateDelete').disabled = false;
+        document.getElementById('stadtInputUpdateDelete').disabled = false;
+        document.getElementById('landInputUpdateDelete').disabled = false;
+        document.getElementById('privateCheckboxUpdateDelete').disabled = false;
+
+        document.getElementById('updateButton').style.display = "inline-block";
+        document.getElementById('deleteButton').style.display = "inline-block";
     }
 }
 

@@ -36,7 +36,6 @@ app.listen(8080);
 
 //Post validate User Endpoint
 app.post('/AdViz/login', (req, res) => {
-    console.log(req.body);
     let json = req.body;
     let user = {
         userid: json.userid,
@@ -161,7 +160,7 @@ var adminUser = {
 
 var normaloUser = {
     userid: 'normalo',
-    password: 'nornalopw',
+    password: 'normalopw',
     firstname: 'Eren',
     lastname: 'Jaeger',
     isAdmin: 0
